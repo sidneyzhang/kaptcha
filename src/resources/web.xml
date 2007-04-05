@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
+<web-app id="WebApp">
+	<display-name>captcha</display-name>
+	<servlet>
+		<servlet-name>SimpleCaptcha</servlet-name>
+		<display-name>SimpleCaptcha</display-name>
+		<servlet-class>com.google.code.kaptcha.servlet.SimpleCaptcha</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>Captcha</servlet-name>
+		<display-name>Captcha</display-name>
+		<servlet-class>com.google.code.kaptcha.servlet.CaptchaServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>Captcha</servlet-name>
+		<display-name>Captcha</display-name>
+		<servlet-class>com.google.code.kaptcha.servlet.CaptchaServlet</servlet-class>
+
+		<!--border around captcha. Legal values are yes or no. Defaults to yes Other values will be ignored-->
+		<init-param>
+			<param-name>cap.border</param-name>
+			<param-value>yes</param-value>
+		</init-param>
+		<!--color of the border. Legal values are r,g,b(and optional alpaha) or white,black,etc. Other values will be ignored-->
+		<init-param>
+			<param-name>cap.border.c</param-name>
+			<param-value>black</param-value>
+		</init-param>
+		<!--thickness of the border around captcha. Legal values are > 0 other values will be ignored. Defaults to one-->
+		<init-param>
+			<param-name>cap.border.th</param-name>
+			<param-value>1</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.obscurificator</param-name>
+			<!--<param-value>nl.captcha.obscurity.imp.ShadowGimpyImp</param-value>-->
+			<!--<param-value>nl.captcha.obscurity.imp.WaterRiple</param-value>-->
+			<param-value>com.google.code.kaptcha.sandbox.TestGimpyImp</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.cap.producer</param-name>
+			<param-value>nl.captcha.obscurity.DefaultCaptchaIml</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.word.imp</param-name>
+			<param-value>nl.captcha.text.imp.DefaultWordRenderer</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.text.producer</param-name>
+			<!--<param-value>nl.captcha.sandbox.ChineseTextProducer</param-value>-->
+			<param-value>nl.captcha.text.imp.FiveLetterFirstNameTextCreator</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.char.arr</param-name>
+			<param-value>2,3,4,6,7,8,a,b,c,d,e,f,g,h,k,o,r,s,t,x,y</param-value>
+		</init-param>
+
+		<!--if default captcha producer is slelected this value represents the amount of chars 
+			that are supplied in the captcha. values below 2 are not exepted when omitted defaults to 5-->
+		<init-param>
+			<param-name>cap.char.arr.l</param-name>
+			<param-value>6</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.font.arr</param-name>
+			<param-value>Arial,Helvetica,Courier,TimesRoman</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.font.size</param-name>
+			<param-value>40</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.font.color</param-name>
+			<param-value>166,31,255</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.bg.imp</param-name>
+			<param-value>nl.captcha.obscurity.imp.DefaultBackgroundImp</param-value>
+		</init-param>
+
+		<!--values can be either red,yellow,blue,cya etc or r,g,b,alpha value-->
+		<init-param>
+			<param-name>cap.background.c.to</param-name>
+			<param-value>255,255,255</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.background.c.from</param-name>
+			<param-value>75,75,255</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.noise.imp</param-name>
+			<param-value>nl.captcha.obscurity.imp.DefaultNoiseImp</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>cap.noise.c</param-name>
+			<param-value>166,31,255</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SimpleCaptcha</servlet-name>
+		<url-pattern>/SimpleCaptcha.jpg</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Captcha</servlet-name>
+		<url-pattern>/Captcha.jpg</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>SimpleCapchaExample.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
