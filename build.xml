@@ -37,6 +37,13 @@
 	<target name="jar" depends="init">
 		<mkdir dir="${build.dir}/classes" />
 
+		<unjar src="${lib.dir}/${imaging.jar}" dest="${build.dir}/imaging"/>
+		<copy todir="${build.dir}/classes">
+			<fileset dir="${build.dir}/imaging">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+
 		<javac
 			srcdir="${base.dir}/src/"
 			destdir="${build.dir}/classes"
@@ -48,7 +55,7 @@
 
 			<classpath refid="classpath" />
 		</javac>
-		<jar jarfile="${build.dir}/kaptcha.jar">
+		<jar jarfile="${build.dir}/${name}-${version}.jar">
 			<fileset dir="${build.dir}/classes"/>
 			<manifest>
 				<attribute name="Specification-Version" value="${version}" />
@@ -58,14 +65,52 @@
 	</target>
 
 	<target name="war" depends="jar">
-		<war destfile="${build.dir}/kaptcha-${version}.war" 
+		<war destfile="${build.dir}/${name}-${version}.war" 
 			webxml="${base.dir}/src/resources/web.xml">
 
 			<lib dir="${lib.dir}">
-				<include name="${imaging.jar}"/>
-				<include name="kaptcha.jar"/>
+				<include name="${name}-${version}.jar"/>
 			</lib>
 		</war>
+	</target>
+
+	<target name="dist" depends="init-dist, clean, war, javadoc">
+		<copy todir="${build.dir}/${dist.name}/">
+			<fileset dir=".">
+				<include name="doc/**" />
+				<include name="README.txt" />
+				<include name="LICENSE.txt" />
+			</fileset>
+		</copy>
+
+		<copy todir="${build.dir}/${dist.name}/">
+			<fileset dir="${build.dir}">
+				<include name="javadoc/**" />
+			</fileset>
+		</copy>
+		
+		<copy file="${build.dir}/${name}-${version}.jar" todir="${build.dir}/${dist.name}/" />
+		<copy file="${build.dir}/${name}-${version}.war" todir="${build.dir}/${dist.name}/" />
+		
+		<zip zipfile="${build.dir}/${dist.name}.zip" basedir="${build.dir}/${dist.name}" />
+	</target>
+
+	<target name="javadoc" depends="init">
+		<property name="javadoc.dir" location="${build.dir}/javadoc" />
+		<mkdir dir="${javadoc.dir}"/>
+		
+		<javadoc
+			destdir="${javadoc.dir}"
+			packagenames="*"
+			author="true"
+			version="true"
+			Windowtitle="kaptcha Javadoc"
+		>
+			<classpath refid="classpath" />
+			<fileset dir="${base.dir}/src/java"/>
+			<doctitle><![CDATA[<h1>kaptcha</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; ${YEAR} http://code.google.com/p/kaptcha/. All Rights Reserved. Build version: ${version}</i>]]></bottom>
+		</javadoc>
 	</target>
 
 	<target name="clean">
@@ -74,7 +119,7 @@
 
 	<target name="init-dist">
 		<input addproperty="version" message="Version number?" />
-		<property name="dist.name" value="SubEtha-${version}" />
+		<property name="dist.name" value="${name}-${version}" />
 	</target>
 
 	<target name="init">

@@ -52,8 +52,8 @@ public class SimpleCaptcha extends HttpServlet implements Servlet
 			'x' };
 
 	/**
-	* @see javax.servlet.http.HttpServlet#void (javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	*/
+	 * 
+	 */
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
 

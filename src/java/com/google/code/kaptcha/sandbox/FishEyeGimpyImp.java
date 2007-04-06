@@ -1,9 +1,3 @@
-/*
- * Created on Sep 14, 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package com.google.code.kaptcha.sandbox;
 
 import java.awt.Color;
@@ -108,11 +102,6 @@ public class FishEyeGimpyImp implements GimpyEngine
 		return image;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see nl.captcha.obscurity.GimpyEngine#setProperties(java.util.Properties)
-	 */
 	public void setProperties(Properties props)
 	{
 		this.props = props;

@@ -26,7 +26,6 @@ import com.jhlabs.image.TransformFilter;
  */
 public class ShadowGimpyImp implements GimpyEngine
 {
-
 	private Properties props = null;
 
 	public BufferedImage getDistortedImage(BufferedImage image)
@@ -78,13 +77,8 @@ public class ShadowGimpyImp implements GimpyEngine
 		return imageDistorted;
 	}
 
-	/* (non-Javadoc)
-	 * @see nl.captcha.obscurity.GimpyEngine#setProperties(java.util.Properties)
-	 */
 	public void setProperties(Properties props)
 	{
 		this.props = props;
-
 	}
-
 }

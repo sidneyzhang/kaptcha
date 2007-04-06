@@ -1,9 +1,3 @@
-/*
- * Created on Jul 10, 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package com.google.code.kaptcha.servlet;
 
 import java.awt.BasicStroke;
@@ -190,18 +184,12 @@ public class DefaultCaptchaIml implements CaptchaProducer
 
 	}
 
-	/* (non-Javadoc)
-	 * @see nl.captcha.servlet.CaptchaProducer#setBackGroundImageProducer(nl.captcha.obscurity.BackgroundProducer)
-	 */
 	public void setBackGroundImageProducer(BackgroundProducer background)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see nl.captcha.servlet.CaptchaProducer#setObscurificator()
-	 */
 	public void setObscurificator()
 	{
 		// TODO Auto-generated method stub
@@ -209,7 +197,7 @@ public class DefaultCaptchaIml implements CaptchaProducer
 	}
 
 	/**
-	 * @return
+	 * @return the properties
 	 */
 	public Properties getProperties()
 	{
