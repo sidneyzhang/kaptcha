@@ -1,11 +1,11 @@
-package com.google.code.kaptcha.text;
+package com.google.code.kaptcha.text.impl;
 
 import java.util.Properties;
 import java.util.Random;
 import java.util.StringTokenizer;
 
-import com.google.code.kaptcha.servlet.Constants;
-
+import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.text.TextProducer;
 
 /**
  * 
@@ -55,9 +55,9 @@ public class DefaultTextCreator implements TextProducer
 	 
 	public void setProperties(Properties props)
 	{
-		if (props != null && props.containsKey(Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_CHARR))
+		if (props != null && props.containsKey(Constants.CAPTCHA_TEXTPRODUCER_CHARR))
 		{
-			String charString = props.getProperty(Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_CHARR);
+			String charString = props.getProperty(Constants.CAPTCHA_TEXTPRODUCER_CHARR);
 			if (charString != null && !charString.equals(""))
 			{
 
@@ -72,7 +72,7 @@ public class DefaultTextCreator implements TextProducer
 
 			}
 
-			String l = props.getProperty(Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_CHARRL);
+			String l = props.getProperty(Constants.CAPTCHA_TEXTPRODUCER_CHARRL);
 			if (l != null && !l.equals(""))
 			{
 				try

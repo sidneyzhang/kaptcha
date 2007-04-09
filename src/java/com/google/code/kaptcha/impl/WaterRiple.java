@@ -1,9 +1,3 @@
-/*
- * Created on Sep 14, 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
 package com.google.code.kaptcha.impl;
 
 import java.awt.Graphics2D;
@@ -35,7 +29,6 @@ public class WaterRiple implements GimpyEngine
 
 	public WaterRiple()
 	{
-
 	}
 
 	/**
@@ -87,13 +80,12 @@ public class WaterRiple implements GimpyEngine
 		return imageDistorted;
 	}
 
-	/* (non-Javadoc)
-	 * @see nl.captcha.obscurity.GimpyEngine#setProperties(java.util.Properties)
+	/*
+	 * (non-Javadoc)
+	 * @see com.google.code.kaptcha.GimpyEngine#setProperties(java.util.Properties)
 	 */
 	public void setProperties(Properties props)
 	{
 		this.props = props;
-
 	}
-
 }

@@ -1,4 +1,4 @@
-package com.google.code.kaptcha.servlet;
+package com.google.code.kaptcha.impl;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -10,6 +10,8 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 import com.google.code.kaptcha.BackgroundProducer;
+import com.google.code.kaptcha.CaptchaProducer;
+import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.text.TextProducer;
 import com.google.code.kaptcha.text.WordRenederer;
@@ -21,7 +23,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 /**
  * @author testvoogd@hotmail.com
  */
-public class DefaultCaptchaIml implements CaptchaProducer
+public class DefaultCaptcha implements CaptchaProducer
 {
 	private Properties props = null;
 	private boolean bbox = true;
@@ -32,13 +34,13 @@ public class DefaultCaptchaIml implements CaptchaProducer
 	private BackgroundProducer backGroundImp = null;
 	private TextProducer textProducer = null;
 
-	public DefaultCaptchaIml(Properties props)
+	public DefaultCaptcha(Properties props)
 	{
 		this.props = props;
 		if (this.props != null)
 		{
 			//doing some init stuff.
-			String box = props.getProperty(Constants.SIMPLE_CAPTCHA_BOX);
+			String box = props.getProperty(Constants.CAPTCHA_BOX);
 			if (box != null && !box.equals("no"))
 			{
 				this.bbox = true;
@@ -50,8 +52,8 @@ public class DefaultCaptchaIml implements CaptchaProducer
 
 			if (bbox)
 			{
-				boxColor = Helper.getColor(this.props, Constants.SIMPLE_CAPTCHA_BOX_C, Color.black);
-				boxThick = Helper.getIntegerFromString(props, Constants.SIMPLE_CAPTCHA_BOX_TH);
+				boxColor = Helper.getColor(this.props, Constants.CAPTCHA_BOX_C, Color.black);
+				boxThick = Helper.getIntegerFromString(props, Constants.CAPTCHA_BOX_TH);
 				if (boxThick == 0)
 					boxThick = 1;
 			}

@@ -1,6 +1,8 @@
-package com.google.code.kaptcha.text;
+package com.google.code.kaptcha.text.impl;
 
 import java.util.Properties;
+
+import com.google.code.kaptcha.text.TextProducer;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package com.google.code.kaptcha;
+package com.google.code.kaptcha.impl;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -8,13 +8,14 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Properties;
 
+import com.google.code.kaptcha.BackgroundProducer;
 import com.google.code.kaptcha.util.Helper;
 
 
 /**
  *
  */
-public class DefaultBackgroundImp implements BackgroundProducer
+public class DefaultBackground implements BackgroundProducer
 {
 	private Properties props = null;
 
@@ -23,11 +24,11 @@ public class DefaultBackgroundImp implements BackgroundProducer
 		this.props = props;
 	}
 
-	public DefaultBackgroundImp()
+	public DefaultBackground()
 	{
 	}
 
-	public DefaultBackgroundImp(Properties props)
+	public DefaultBackground(Properties props)
 	{
 		this.props = props;
 	}
@@ -37,8 +38,8 @@ public class DefaultBackgroundImp implements BackgroundProducer
 		int width = image.getWidth();
 		int height = image.getHeight();
 
-		Color from = Helper.getColor(props, BackgroundProducer.SIMPLE_CAPCHA_BCKGRND_CLR_FRM, Color.lightGray);
-		Color to = Helper.getColor(props, BackgroundProducer.SIMPLE_CAPCHA_BCKGRND_CLR_T, Color.white);
+		Color from = Helper.getColor(props, BackgroundProducer.CAPCHA_BCKGRND_CLR_FRM, Color.lightGray);
+		Color to = Helper.getColor(props, BackgroundProducer.CAPCHA_BCKGRND_CLR_T, Color.white);
 
 		//create an opac image
 		BufferedImage resultImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

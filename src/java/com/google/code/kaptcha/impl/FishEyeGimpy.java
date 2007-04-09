@@ -1,4 +1,4 @@
-package com.google.code.kaptcha.sandbox;
+package com.google.code.kaptcha.impl;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -15,7 +15,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 /**
  *
  */
-public class FishEyeGimpyImp implements GimpyEngine
+public class FishEyeGimpy implements GimpyEngine
 {
 
 	@SuppressWarnings("unused")
@@ -128,7 +128,7 @@ public class FishEyeGimpyImp implements GimpyEngine
 	public static void main(String[] args)
 	{
 
-		FishEyeGimpyImp imp = new FishEyeGimpyImp();
+		FishEyeGimpy imp = new FishEyeGimpy();
 		BufferedImage image = new BufferedImage(3000, 2000, BufferedImage.TYPE_INT_ARGB);
 		image.getGraphics().setColor(Color.white);
 		image.getGraphics().drawImage(image, 0, 0, null);
@@ -143,13 +143,10 @@ public class FishEyeGimpyImp implements GimpyEngine
 			JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(image);
 			param.setQuality(1f, true);
 			encoder.encode(image, param);
-
 		}
 		catch (Exception e)
 		{
 			// TODO: handle exception
 		}
-
 	}
-
 }

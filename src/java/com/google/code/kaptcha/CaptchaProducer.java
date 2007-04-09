@@ -1,11 +1,9 @@
-package com.google.code.kaptcha.servlet;
+package com.google.code.kaptcha;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
 
-import com.google.code.kaptcha.BackgroundProducer;
-import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.text.TextProducer;
 import com.google.code.kaptcha.text.WordRenederer;
 

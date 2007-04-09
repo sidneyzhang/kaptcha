@@ -1,4 +1,4 @@
-package com.google.code.kaptcha.text.imp;
+package com.google.code.kaptcha.text.impl;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.util.Properties;
 import java.util.Random;
 
-import com.google.code.kaptcha.servlet.Constants;
+import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.text.WordRenederer;
 import com.google.code.kaptcha.util.Helper;
 
@@ -57,7 +57,7 @@ public class DefaultWordRenderer implements WordRenederer
 		Random generator = new Random();
 
 		char[] wc = word.toCharArray();
-		Color fontColor = Helper.getColor(props, Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_FONTC, Color.black);
+		Color fontColor = Helper.getColor(props, Constants.CAPTCHA_TEXTPRODUCER_FONTC, Color.black);
 		g2D.setColor(fontColor);
 		FontRenderContext frc = g2D.getFontRenderContext();
 		int startPosX = 25;

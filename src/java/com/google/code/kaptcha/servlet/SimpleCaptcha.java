@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.code.kaptcha.Constants;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
@@ -68,7 +69,7 @@ public class SimpleCaptcha extends HttpServlet implements Servlet
 		}
 		// this key can be read from any controller to check wether user
 		// is a computer or human..
-		req.getSession().setAttribute(Constants.SIMPLE_CAPCHA_SESSION_KEY, test);
+		req.getSession().setAttribute(Constants.CAPCHA_SESSION_KEY, test);
 
 		JPEGImageEncoder encoder =
 			JPEGCodec.createJPEGEncoder(resp.getOutputStream());

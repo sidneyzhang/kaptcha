@@ -10,7 +10,7 @@
 		<br><br><br><br>
 		
 		<%
-			String c= (String)session.getAttribute(com.google.code.kaptcha.servlet.Constants.SIMPLE_CAPCHA_SESSION_KEY) ;
+			String c= (String)session.getAttribute(com.google.code.kaptcha.Constants.CAPCHA_SESSION_KEY);
 			String parm = (String) request.getParameter("captchafield");
 			
 			out.println(parm + " ? " + c + ":");
@@ -18,7 +18,7 @@
 			if (c != null && parm != null) {
 				if (c.equals(parm)) {
 					out.println("<b>true</b>");
-				}else {
+				} else {
 					out.println("<b>false</b>");
 				}
 			}

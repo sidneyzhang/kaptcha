@@ -7,18 +7,18 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 
 import com.google.code.kaptcha.BackgroundProducer;
-import com.google.code.kaptcha.DefaultBackgroundImp;
+import com.google.code.kaptcha.CaptchaProducer;
+import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;
-import com.google.code.kaptcha.impl.DefaultNoiseImp;
+import com.google.code.kaptcha.impl.DefaultBackground;
+import com.google.code.kaptcha.impl.DefaultCaptcha;
+import com.google.code.kaptcha.impl.DefaultNoise;
 import com.google.code.kaptcha.impl.WaterRiple;
-import com.google.code.kaptcha.servlet.CaptchaProducer;
-import com.google.code.kaptcha.servlet.Constants;
-import com.google.code.kaptcha.servlet.DefaultCaptchaIml;
-import com.google.code.kaptcha.text.DefaultTextCreator;
 import com.google.code.kaptcha.text.TextProducer;
 import com.google.code.kaptcha.text.WordRenederer;
-import com.google.code.kaptcha.text.imp.DefaultWordRenderer;
+import com.google.code.kaptcha.text.impl.DefaultTextCreator;
+import com.google.code.kaptcha.text.impl.DefaultWordRenderer;
 
 /**
  * 
@@ -28,7 +28,7 @@ public class Helper
 	private static Font[] defaultFonts =  new Font[]{
 		new Font("Arial", Font.BOLD, 40),
 		new Font("Courier", Font.BOLD, 40)			
-		};
+	};
 	
 	public static Font[] getFonts(Properties props)
 	{
@@ -36,10 +36,10 @@ public class Helper
 		if (props == null)
 			return Helper.defaultFonts;
 
-		String fontArr = props.getProperty(Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_FONTA);
+		String fontArr = props.getProperty(Constants.CAPTCHA_TEXTPRODUCER_FONTA);
 		if (fontArr == null)
 			return Helper.defaultFonts;
-		int fontsize = Helper.getIntegerFromString(props, Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_FONTS);
+		int fontsize = Helper.getIntegerFromString(props, Constants.CAPTCHA_TEXTPRODUCER_FONTS);
 		if (fontsize < 8)
 			fontsize = 40;
 		Font[] fonts = null;
@@ -70,7 +70,6 @@ public class Helper
 		{
 			return fonts;
 		}
-
 	}
 	
 	public static int getIntegerFromString(Properties props, String key)
@@ -118,7 +117,6 @@ public class Helper
 			{
 				c = new Color(r, g, b);
 			}
-
 		}
 		catch (Exception e)
 		{
@@ -126,7 +124,6 @@ public class Helper
 		}
 
 		return c;
-
 	}
 	
 	public static Color getColor(Properties props, String key, Color defaultc)
@@ -186,9 +183,9 @@ public class Helper
 			switch (type)
 			{
 				case NOICEIMP:
-					String nimp = props.getProperty(Constants.SIMPLE_CAPTCHA_NOISE_IMP);
+					String nimp = props.getProperty(Constants.CAPTCHA_NOISE_IMP);
 					if (nimp == null)
-						return new DefaultNoiseImp(props);
+						return new DefaultNoise(props);
 					try
 					{
 						NoiseProducer nop = (NoiseProducer)Class.forName(nimp).newInstance();
@@ -199,11 +196,11 @@ public class Helper
 					catch (Exception e)
 					{
 						System.out.println(e.getMessage());
-						return new DefaultNoiseImp(props);
+						return new DefaultNoise(props);
 					}
 
 				case OBSIMP:
-					String obs = props.getProperty(Constants.SIMPLE_CAPTCHA_OBSCURIFICATOR);
+					String obs = props.getProperty(Constants.CAPTCHA_OBSCURIFICATOR);
 					if (obs == null)
 						return new WaterRiple(props);
 					try
@@ -218,9 +215,9 @@ public class Helper
 						return new WaterRiple(props);
 					}
 				case BGIMP:
-					String bg = props.getProperty(Constants.SIMPLE_CAPTCHA_BG_IMP);
+					String bg = props.getProperty(Constants.CAPTCHA_BG_IMP);
 					if (bg == null)
-						return new DefaultBackgroundImp(props);
+						return new DefaultBackground(props);
 					try
 					{
 						BackgroundProducer gimp = (BackgroundProducer)Class.forName(bg).newInstance();
@@ -230,11 +227,11 @@ public class Helper
 					catch (Exception e)
 					{
 						System.out.println(e.getMessage());
-						return new DefaultBackgroundImp(props);
+						return new DefaultBackground(props);
 					}
 
 				case WRDREN:
-					String wr = props.getProperty(Constants.SIMPLE_CAPTCHA_WORDRENERER);
+					String wr = props.getProperty(Constants.CAPTCHA_WORDRENERER);
 					if (wr == null)
 						return new DefaultWordRenderer(props);
 					try
@@ -249,7 +246,7 @@ public class Helper
 						return new DefaultWordRenderer(props);
 					}
 				case TXTPRDO:
-					String txp = props.getProperty(Constants.SIMPLE_CAPCHA_TEXTPRODUCER);
+					String txp = props.getProperty(Constants.CAPCHA_TEXTPRODUCER);
 					if (txp == null)
 						return new DefaultTextCreator(props);
 					try
@@ -264,9 +261,9 @@ public class Helper
 						return new DefaultTextCreator(props);
 					}
 				case CPROD:
-					String cp = props.getProperty(Constants.SIMPLE_CAPTCHA_PRODUCER);
+					String cp = props.getProperty(Constants.CAPTCHA_PRODUCER);
 					if (cp == null)
-						return new DefaultCaptchaIml(props);
+						return new DefaultCaptcha(props);
 					try
 					{
 						CaptchaProducer p = (CaptchaProducer)Class.forName(cp).newInstance();
@@ -275,7 +272,7 @@ public class Helper
 					catch (Exception e)
 					{
 						System.out.println(e.getMessage());
-						return new DefaultCaptchaIml(props);
+						return new DefaultCaptcha(props);
 					}
 
 				default:

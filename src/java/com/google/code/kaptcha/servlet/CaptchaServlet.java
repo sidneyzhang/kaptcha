@@ -1,4 +1,5 @@
 package com.google.code.kaptcha.servlet;
+
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.code.kaptcha.CaptchaProducer;
+import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.util.Helper;
 
 
@@ -17,8 +20,8 @@ import com.google.code.kaptcha.util.Helper;
  * @author		testvoogd@hotmail.com
  */
 @SuppressWarnings("serial")
-public class CaptchaServlet extends HttpServlet implements Servlet {
-	
+public class CaptchaServlet extends HttpServlet implements Servlet
+{	
 	private Properties props = null;
 	
 	private CaptchaProducer captchaProducer = null;
@@ -32,7 +35,7 @@ public class CaptchaServlet extends HttpServlet implements Servlet {
 		// this key can be read from any controller to check wether user
 		// is a computer or human..
 		String capText = captchaProducer.createText();
-		req.getSession().setAttribute(Constants.SIMPLE_CAPCHA_SESSION_KEY, capText);
+		req.getSession().setAttribute(Constants.CAPCHA_SESSION_KEY, capText);
 
 //		String simpleC =(String) req.getSession().getAttribute(Constants.SIMPLE_CAPCHA_SESSION_KEY);
 		

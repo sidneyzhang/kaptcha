@@ -1,15 +1,6 @@
-/*
- * Created on Sep 17, 2005
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
-package com.google.code.kaptcha.sandbox;
+package com.google.code.kaptcha.text.impl;
 
 import java.util.Properties;
-
-import com.google.code.kaptcha.text.DefaultTextCreator;
-
 
 /**
  * TextProducer Implementation that will return chinese characters..
