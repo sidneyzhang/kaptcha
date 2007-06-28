@@ -18,6 +18,9 @@
 	<property name="ant.build.javac.target" value="1.5" />
 	<property name="ant.build.javac.source" value="1.5" />
 
+	<property name="retroweaver.version" value="2.0" />
+	<property name="retroweaver.home" value="../retroweaver-${retroweaver.version}" />
+
 	<tstamp/>
 	<tstamp>
 		<format property="YEAR" pattern="yyyy" />
@@ -88,10 +91,13 @@
 				<include name="javadoc/**" />
 			</fileset>
 		</copy>
-		
+
 		<copy file="${build.dir}/${name}-${version}.jar" todir="${build.dir}/${dist.name}/" />
 		<copy file="${build.dir}/${name}-${version}.war" todir="${build.dir}/${dist.name}/" />
 		
+		<retroweaver inputjar="${build.dir}/${name}-${version}.jar" 
+					outputjar="${build.dir}/${dist.name}/${name}-${version}-jdk14.jar" />
+
 		<zip zipfile="${build.dir}/${dist.name}.zip" basedir="${build.dir}/${dist.name}" />
 	</target>
 
@@ -117,7 +123,7 @@
 		<delete dir="${build.dir}" />
 	</target>
 
-	<target name="init-dist">
+	<target name="init-dist" depends="rt-task">
 		<input addproperty="version" message="Version number?" />
 		<property name="dist.name" value="${name}-${version}" />
 	</target>
@@ -134,5 +140,14 @@
 		<svn javahl="false"><status path="." revisionProperty="revisionVersion" /></svn>
 		<!--  A hack because svnant does not respect Ant's properties can't be overwritten rule. -->
 		<property name="version" value="${revisionVersion}" />
+	</target>
+
+	<target name="rt-task">
+		<taskdef name="retroweaver" classname="net.sourceforge.retroweaver.ant.RetroWeaverTask">
+		  <classpath>
+		    <fileset dir="${retroweaver.home}/lib" includes="**/*"/>
+		    <pathelement location="${retroweaver.home}/release/retroweaver-all-${retroweaver.version}.jar"/>
+		  </classpath>
+		</taskdef>
 	</target>
 </project>
