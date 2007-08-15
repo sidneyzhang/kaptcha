@@ -7,16 +7,16 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 
 import com.google.code.kaptcha.BackgroundProducer;
-import com.google.code.kaptcha.CaptchaProducer;
+import com.google.code.kaptcha.KaptchaProducer;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;
 import com.google.code.kaptcha.impl.DefaultBackground;
-import com.google.code.kaptcha.impl.DefaultCaptcha;
+import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.impl.DefaultNoise;
-import com.google.code.kaptcha.impl.WaterRiple;
+import com.google.code.kaptcha.impl.WaterRipple;
 import com.google.code.kaptcha.text.TextProducer;
-import com.google.code.kaptcha.text.WordRenederer;
+import com.google.code.kaptcha.text.WordRenderer;
 import com.google.code.kaptcha.text.impl.DefaultTextCreator;
 import com.google.code.kaptcha.text.impl.DefaultWordRenderer;
 
@@ -36,10 +36,10 @@ public class Helper
 		if (props == null)
 			return Helper.defaultFonts;
 
-		String fontArr = props.getProperty(Constants.CAPTCHA_TEXTPRODUCER_FONTA);
+		String fontArr = props.getProperty(Constants.KAPTCHA_TEXTPRODUCER_FONTA);
 		if (fontArr == null)
 			return Helper.defaultFonts;
-		int fontsize = Helper.getIntegerFromString(props, Constants.CAPTCHA_TEXTPRODUCER_FONTS);
+		int fontsize = Helper.getIntegerFromString(props, Constants.KAPTCHA_TEXTPRODUCER_FONTS);
 		if (fontsize < 8)
 			fontsize = 40;
 		Font[] fonts = null;
@@ -170,7 +170,7 @@ public class Helper
 	public final static class ThingFactory
 	{
 		
-		public final static int NOICEIMP = 1;
+		public final static int NOISEIMP = 1;
 		public final static int OBSIMP = 2;
 		public final static int BGIMP = 3;
 		public final static int WRDREN = 4;
@@ -182,8 +182,8 @@ public class Helper
 		{
 			switch (type)
 			{
-				case NOICEIMP:
-					String nimp = props.getProperty(Constants.CAPTCHA_NOISE_IMP);
+				case NOISEIMP:
+					String nimp = props.getProperty(Constants.KAPTCHA_NOISE_IMPL);
 					if (nimp == null)
 						return new DefaultNoise(props);
 					try
@@ -200,9 +200,9 @@ public class Helper
 					}
 
 				case OBSIMP:
-					String obs = props.getProperty(Constants.CAPTCHA_OBSCURIFICATOR);
+					String obs = props.getProperty(Constants.KAPTCHA_OBSCURIFICATOR_IMPL);
 					if (obs == null)
-						return new WaterRiple(props);
+						return new WaterRipple(props);
 					try
 					{
 						GimpyEngine gimp = (GimpyEngine)Class.forName(obs).newInstance();
@@ -212,10 +212,10 @@ public class Helper
 					catch (Exception e)
 					{
 						System.out.print(e.getMessage());
-						return new WaterRiple(props);
+						return new WaterRipple(props);
 					}
 				case BGIMP:
-					String bg = props.getProperty(Constants.CAPTCHA_BG_IMP);
+					String bg = props.getProperty(Constants.KAPTCHA_BG_IMPL);
 					if (bg == null)
 						return new DefaultBackground(props);
 					try
@@ -231,12 +231,12 @@ public class Helper
 					}
 
 				case WRDREN:
-					String wr = props.getProperty(Constants.CAPTCHA_WORDRENERER);
+					String wr = props.getProperty(Constants.KAPTCHA_WORDRENDERER_IMPL);
 					if (wr == null)
 						return new DefaultWordRenderer(props);
 					try
 					{
-						WordRenederer ren = (WordRenederer)Class.forName(wr).newInstance();
+						WordRenderer ren = (WordRenderer)Class.forName(wr).newInstance();
 						ren.setProperties(props);
 						return ren;
 					}
@@ -246,7 +246,7 @@ public class Helper
 						return new DefaultWordRenderer(props);
 					}
 				case TXTPRDO:
-					String txp = props.getProperty(Constants.CAPCHA_TEXTPRODUCER);
+					String txp = props.getProperty(Constants.KAPTCHA_TEXT_PRODUCER_IMPL);
 					if (txp == null)
 						return new DefaultTextCreator(props);
 					try
@@ -261,18 +261,19 @@ public class Helper
 						return new DefaultTextCreator(props);
 					}
 				case CPROD:
-					String cp = props.getProperty(Constants.CAPTCHA_PRODUCER);
+					String cp = props.getProperty(Constants.KAPTCHA_PRODUCER_IMPL);
 					if (cp == null)
-						return new DefaultCaptcha(props);
+						return new DefaultKaptcha(props);
 					try
 					{
-						CaptchaProducer p = (CaptchaProducer)Class.forName(cp).newInstance();
+						KaptchaProducer p = (KaptchaProducer)Class.forName(cp).newInstance();
 						p.setProperties(props);
+						return p;
 					}
 					catch (Exception e)
 					{
 						System.out.println(e.getMessage());
-						return new DefaultCaptcha(props);
+						return new DefaultKaptcha(props);
 					}
 
 				default:

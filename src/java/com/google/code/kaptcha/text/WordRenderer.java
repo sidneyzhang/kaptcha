@@ -6,7 +6,7 @@ import java.util.Properties;
 /**
  *
  */
-public interface WordRenederer
+public interface WordRenderer
 {
 	/** 
 	 * Render a word to a BufferedImage.

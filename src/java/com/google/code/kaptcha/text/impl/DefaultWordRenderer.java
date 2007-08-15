@@ -11,13 +11,13 @@ import java.util.Properties;
 import java.util.Random;
 
 import com.google.code.kaptcha.Constants;
-import com.google.code.kaptcha.text.WordRenederer;
+import com.google.code.kaptcha.text.WordRenderer;
 import com.google.code.kaptcha.util.Helper;
 
 /**
  * 
  */
-public class DefaultWordRenderer implements WordRenederer
+public class DefaultWordRenderer implements WordRenderer
 {
 
 	private Properties props = null;
@@ -57,7 +57,7 @@ public class DefaultWordRenderer implements WordRenederer
 		Random generator = new Random();
 
 		char[] wc = word.toCharArray();
-		Color fontColor = Helper.getColor(props, Constants.CAPTCHA_TEXTPRODUCER_FONTC, Color.black);
+		Color fontColor = Helper.getColor(props, Constants.KAPTCHA_TEXTPRODUCER_FONTC, Color.black);
 		g2D.setColor(fontColor);
 		FontRenderContext frc = g2D.getFontRenderContext();
 		int startPosX = 25;

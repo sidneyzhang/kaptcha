@@ -5,12 +5,12 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 import com.google.code.kaptcha.text.TextProducer;
-import com.google.code.kaptcha.text.WordRenederer;
+import com.google.code.kaptcha.text.WordRenderer;
 
 /**
  * 
  */
-public interface CaptchaProducer
+public interface KaptchaProducer
 {
 	/**
 	 * Create an image which have witten a distorted text, text given 
@@ -36,5 +36,5 @@ public interface CaptchaProducer
 
 	public abstract String createText();
 
-	public abstract void setWordRenderer(WordRenederer renederer);
+	public abstract void setWordRenderer(WordRenderer renederer);
 }

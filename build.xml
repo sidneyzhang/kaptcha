@@ -71,7 +71,11 @@
 		<war destfile="${build.dir}/${name}-${version}.war" 
 			webxml="${base.dir}/src/resources/web.xml">
 
-			<lib dir="${lib.dir}">
+			<fileset dir="${base.dir}/doc/">
+				<include name="*.jsp" />
+			</fileset>
+
+			<lib dir="${build.dir}">
 				<include name="${name}-${version}.jar"/>
 			</lib>
 		</war>

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 /**
  * 
  */
-public interface CaptchaEngine
+public interface KaptchaEngine
 {
 	public abstract BufferedImage getDistortedImage(BufferedImage image);
 }

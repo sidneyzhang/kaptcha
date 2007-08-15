@@ -75,7 +75,7 @@ public class DefaultNoise implements NoiseProducer
 		Graphics2D graph = (Graphics2D)image.getGraphics();
 		graph.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
 
-		Color mycol = Helper.getColor(props, Constants.CAPTCHA_NOISE_COLOR, Color.black);
+		Color mycol = Helper.getColor(props, Constants.KAPTCHA_NOISE_COLOR, Color.black);
 
 		graph.setColor(mycol);
 

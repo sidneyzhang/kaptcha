@@ -5,20 +5,23 @@ package com.google.code.kaptcha;
  */
 public class Constants
 {
-	public final static String CAPCHA_SESSION_KEY = "CAPCHA_SESSION_KEY";
-	public final static String CAPCHA_TEXTPRODUCER = "cap.text.producer";
-	public final static String CAPTCHA_BG_IMP = "cap.bg.imp";
-	public final static String CAPTCHA_BOX = "cap.border";
-	public final static String CAPTCHA_BOX_C = "cap.border.c";
-	public final static String CAPTCHA_BOX_TH = "cap.border.th";
-	public final static String CAPTCHA_NOISE_COLOR = "cap.noise.c";
-	public final static String CAPTCHA_NOISE_IMP = "cap.noise.imp";	
-	public final static String CAPTCHA_OBSCURIFICATOR = "cap.obscurificator";
-	public final static String CAPTCHA_PRODUCER = "cap.producer";
-	public final static String CAPTCHA_TEXTPRODUCER_CHARR = "cap.char.arr";
-	public final static String CAPTCHA_TEXTPRODUCER_CHARRL = "cap.char.arr.l";
-	public final static String CAPTCHA_TEXTPRODUCER_FONTA = "cap.font.arr";
-	public final static String CAPTCHA_TEXTPRODUCER_FONTC = "cap.font.color";
-	public final static String CAPTCHA_TEXTPRODUCER_FONTS = "cap.font.size";
-	public final static String CAPTCHA_WORDRENERER = "cap.word.imp";
+	public final static String KAPTCHA_SESSION_KEY = "KAPTCHA_SESSION_KEY";
+	public final static String KAPTCHA_TEXT_PRODUCER_IMPL = "kaptcha.text.producer.impl";
+	public final static String KAPTCHA_BG_IMPL = "kaptcha.bg.impl";
+	public final static String KAPTCHA_BORDER = "kaptcha.border";
+	public final static String KAPTCHA_BORDER_COLOR = "kaptcha.border.color";
+	public final static String KAPTCHA_BORDER_TH = "kaptcha.border.th";
+	public final static String KAPTCHA_NOISE_COLOR = "kaptcha.noise.color";
+	public final static String KAPTCHA_NOISE_IMPL = "kaptcha.noise.impl";	
+	public final static String KAPTCHA_OBSCURIFICATOR_IMPL = "kaptcha.obscurificator.impl";
+	public final static String KAPTCHA_PRODUCER_IMPL = "kaptcha.producer.impl";
+	public final static String KAPTCHA_TEXTPRODUCER_CHARR = "kaptcha.char.arr";
+	public final static String KAPTCHA_TEXTPRODUCER_CHARRL = "kaptcha.char.arr.l";
+	public final static String KAPTCHA_TEXTPRODUCER_FONTA = "kaptcha.font.arr";
+	public final static String KAPTCHA_TEXTPRODUCER_FONTC = "kaptcha.font.color";
+	public final static String KAPTCHA_TEXTPRODUCER_FONTS = "kaptcha.font.size";
+	public final static String KAPTCHA_WORDRENDERER_IMPL = "kaptcha.word.impl";
+	public static final String KAPTCHA_BCKGRND_CLR_FRM = "kaptcha.background.clear.from";
+	public static final String KAPTCHA_BCKGRND_CLR_T = "kaptcha.background.clear.to";
+	public static final String KAPTCHA_BCKGRND_CLR = "kaptcha.background.clear";
 }

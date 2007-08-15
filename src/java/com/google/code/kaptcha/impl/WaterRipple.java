@@ -17,17 +17,17 @@ import com.jhlabs.image.WaterFilter;
 /**
  * 
  */
-public class WaterRiple implements GimpyEngine
+public class WaterRipple implements GimpyEngine
 {
 
 	private Properties props = null;
 
-	public WaterRiple(Properties props)
+	public WaterRipple(Properties props)
 	{
 		this.props = props;
 	}
 
-	public WaterRiple()
+	public WaterRipple()
 	{
 	}
 
@@ -74,7 +74,7 @@ public class WaterRiple implements GimpyEngine
 		graph.dispose();
 
 		//draw line over the iamge and/or text
-		NoiseProducer noise = (NoiseProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.NOICEIMP, props);
+		NoiseProducer noise = (NoiseProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.NOISEIMP, props);
 		noise.makeNoise(imageDistorted, .1f, .1f, .25f, .25f);
 		noise.makeNoise(imageDistorted, .1f, .25f, .5f, .9f);
 		return imageDistorted;

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 /**
  * 
  */
-public interface CaptchaRenderer
+public interface KaptchaRenderer
 {	
 	public BufferedImage renderCaptcha (String word, int width, int height);
 }

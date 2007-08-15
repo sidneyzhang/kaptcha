@@ -3,15 +3,15 @@
 	<head>
 		<%@ page language="java" contentType="text/html; charset=ISO-8859-1" %>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>SimpleCapchaExample.jsp</title>
+		<title>Kaptcha Example</title>
 	</head>
 	<body>
 	
 		<br><br><br><br>
 		
 		<%
-			String c= (String)session.getAttribute(com.google.code.kaptcha.Constants.CAPCHA_SESSION_KEY);
-			String parm = (String) request.getParameter("captchafield");
+			String c= (String)session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+			String parm = (String) request.getParameter("kaptchafield");
 			
 			out.println(parm + " ? " + c + ":");
 			
@@ -28,11 +28,11 @@
 		
 		<table>
 			<tr>
-				<td><img src="Captcha.jpg"></td>
+				<td><img src="Kaptcha.jpg"></td>
 				<td valign="top">
 			
 					<form>
-						<br>sec code:<input type="text" name="captchafield"><br>
+						<br>sec code:<input type="text" name="kaptchafield"><br>
 						<input type="submit" name="submit">
 					</form>
 				</td>

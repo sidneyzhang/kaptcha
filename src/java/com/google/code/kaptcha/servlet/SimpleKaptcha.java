@@ -20,10 +20,12 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
+ * This servlet generates the image within the doGet
+ * 
  * @author		testvoogd@hotmail.com
  */
 @SuppressWarnings("serial")
-public class SimpleCaptcha extends HttpServlet implements Servlet
+public class SimpleKaptcha extends HttpServlet implements Servlet
 {
 
 	private Random generator = new Random();
@@ -56,7 +58,8 @@ public class SimpleCaptcha extends HttpServlet implements Servlet
 	 * 
 	 */
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-		throws ServletException, IOException {
+		throws ServletException, IOException
+	{
 
 		int ImageWidth = 200;
 		int ImageHeight = 70;
@@ -69,7 +72,7 @@ public class SimpleCaptcha extends HttpServlet implements Servlet
 		}
 		// this key can be read from any controller to check wether user
 		// is a computer or human..
-		req.getSession().setAttribute(Constants.CAPCHA_SESSION_KEY, test);
+		req.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, test);
 
 		JPEGImageEncoder encoder =
 			JPEGCodec.createJPEGEncoder(resp.getOutputStream());

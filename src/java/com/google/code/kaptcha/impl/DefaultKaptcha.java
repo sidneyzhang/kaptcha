@@ -10,11 +10,11 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 import com.google.code.kaptcha.BackgroundProducer;
-import com.google.code.kaptcha.CaptchaProducer;
+import com.google.code.kaptcha.KaptchaProducer;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.text.TextProducer;
-import com.google.code.kaptcha.text.WordRenederer;
+import com.google.code.kaptcha.text.WordRenderer;
 import com.google.code.kaptcha.util.Helper;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;
@@ -23,24 +23,24 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 /**
  * @author testvoogd@hotmail.com
  */
-public class DefaultCaptcha implements CaptchaProducer
+public class DefaultKaptcha implements KaptchaProducer
 {
 	private Properties props = null;
 	private boolean bbox = true;
 	private Color boxColor = Color.black;
 	private int boxThick = 1;
-	private WordRenederer wordRenderer = null;
+	private WordRenderer wordRenderer = null;
 	private GimpyEngine gimpy = null;
 	private BackgroundProducer backGroundImp = null;
 	private TextProducer textProducer = null;
 
-	public DefaultCaptcha(Properties props)
+	public DefaultKaptcha(Properties props)
 	{
 		this.props = props;
 		if (this.props != null)
 		{
 			//doing some init stuff.
-			String box = props.getProperty(Constants.CAPTCHA_BOX);
+			String box = props.getProperty(Constants.KAPTCHA_BORDER);
 			if (box != null && !box.equals("no"))
 			{
 				this.bbox = true;
@@ -52,8 +52,8 @@ public class DefaultCaptcha implements CaptchaProducer
 
 			if (bbox)
 			{
-				boxColor = Helper.getColor(this.props, Constants.CAPTCHA_BOX_C, Color.black);
-				boxThick = Helper.getIntegerFromString(props, Constants.CAPTCHA_BOX_TH);
+				boxColor = Helper.getColor(this.props, Constants.KAPTCHA_BORDER_COLOR, Color.black);
+				boxThick = Helper.getIntegerFromString(props, Constants.KAPTCHA_BORDER_TH);
 				if (boxThick == 0)
 					boxThick = 1;
 			}
@@ -61,7 +61,7 @@ public class DefaultCaptcha implements CaptchaProducer
 
 			this.gimpy = (GimpyEngine)Helper.ThingFactory.loadImpl(Helper.ThingFactory.OBSIMP, props);
 			this.backGroundImp = (BackgroundProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.BGIMP, props);
-			this.wordRenderer = (WordRenederer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.WRDREN, props);
+			this.wordRenderer = (WordRenderer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.WRDREN, props);
 			this.textProducer = (TextProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.TXTPRDO, props);
 		}
 	}
@@ -171,16 +171,16 @@ public class DefaultCaptcha implements CaptchaProducer
 			graphics.setStroke(stroke);
 		}
 
-		Line2D d2 = new Line2D.Double((double)0, (double)0, (double)0, (double)w);
+		Line2D d2 = new Line2D.Double(0, 0, 0, w);
 		graphics.draw(d2);
 
-		Line2D d3 = new Line2D.Double((double)0, (double)0, (double)w, (double)0);
+		Line2D d3 = new Line2D.Double(0, 0, w, 0);
 		graphics.draw(d3);
 
-		d3 = new Line2D.Double((double)0, (double)h - 1, (double)w, (double)h - 1);
+		d3 = new Line2D.Double(0, h - 1, w, h - 1);
 		graphics.draw(d3);
 
-		d3 = new Line2D.Double((double)w - 1, (double)h - 1, (double)w - 1, (double)0);
+		d3 = new Line2D.Double(w - 1, h - 1, w - 1, 0);
 
 		graphics.draw(d3);
 
@@ -240,7 +240,7 @@ public class DefaultCaptcha implements CaptchaProducer
 	/**
 	 * @param renederer
 	 */
-	public void setWordRenderer(WordRenederer renederer)
+	public void setWordRenderer(WordRenderer renederer)
 	{
 		wordRenderer = renederer;
 	}

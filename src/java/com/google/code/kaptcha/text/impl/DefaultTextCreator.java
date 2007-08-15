@@ -55,9 +55,9 @@ public class DefaultTextCreator implements TextProducer
 	 
 	public void setProperties(Properties props)
 	{
-		if (props != null && props.containsKey(Constants.CAPTCHA_TEXTPRODUCER_CHARR))
+		if (props != null && props.containsKey(Constants.KAPTCHA_TEXTPRODUCER_CHARR))
 		{
-			String charString = props.getProperty(Constants.CAPTCHA_TEXTPRODUCER_CHARR);
+			String charString = props.getProperty(Constants.KAPTCHA_TEXTPRODUCER_CHARR);
 			if (charString != null && !charString.equals(""))
 			{
 
@@ -72,7 +72,7 @@ public class DefaultTextCreator implements TextProducer
 
 			}
 
-			String l = props.getProperty(Constants.CAPTCHA_TEXTPRODUCER_CHARRL);
+			String l = props.getProperty(Constants.KAPTCHA_TEXTPRODUCER_CHARRL);
 			if (l != null && !l.equals(""))
 			{
 				try
