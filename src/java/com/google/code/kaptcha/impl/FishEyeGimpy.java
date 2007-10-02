@@ -32,11 +32,11 @@ public class FishEyeGimpy implements GimpyEngine
 		imgH = image.getHeight();
 		imgW = image.getWidth();
 
-		// want lines put them in a variable so we migh configure these later
+		// want lines put them in a variable so we might configure these later
 		int hstripes = imgH / 7;// 4;
 		int vstripes = imgW / 7;// 8;
 
-		// claculate space between lines
+		// calculate space between lines
 		int hspace = imgH / (hstripes + 1);
 		int vspace = imgW / (vstripes + 1);
 
@@ -58,7 +58,6 @@ public class FishEyeGimpy implements GimpyEngine
 
 		// create a pixel array of the original image.
 		// we need this later to do the operations on..
-
 		int pix[] = new int[imgH * imgW];
 		int j = 0;
 

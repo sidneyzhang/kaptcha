@@ -11,23 +11,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.code.kaptcha.KaptchaProducer;
 import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.util.Helper;
 
 
 /**
  * This servlet uses the settings passed into it via the 
- * KaptchaProducer api.
+ * Producer api.
  * 
  * @author		testvoogd@hotmail.com
  */
 @SuppressWarnings("serial")
 public class KaptchaServlet extends HttpServlet implements Servlet
 {	
-	private Properties props = null;
-	
-	private KaptchaProducer captchaProducer = null;
+	private Properties props = new Properties();
+
+	private Producer captchaProducer = null;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException
@@ -53,10 +53,8 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 	public void init(ServletConfig conf) throws ServletException
 	{
 		super.init(conf);
-		// init method should be thread safe so no
-		// worries here...
-		props = new Properties();
-		Enumeration initParams = conf.getInitParameterNames();
+
+		Enumeration<?> initParams = conf.getInitParameterNames();
 		while (initParams.hasMoreElements())
 		{
 			String key = (String)initParams.nextElement();
@@ -64,6 +62,6 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 			props.put(key, value);
 		}
 		
-		this.captchaProducer = (KaptchaProducer) Helper.ThingFactory.loadImpl(Helper.ThingFactory.CPROD, props);
+		this.captchaProducer = (Producer) Helper.ThingFactory.loadImpl(Helper.ThingFactory.PRODUCER_IMPL, props);
 	}
 }

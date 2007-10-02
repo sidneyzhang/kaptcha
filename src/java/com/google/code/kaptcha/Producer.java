@@ -10,14 +10,14 @@ import com.google.code.kaptcha.text.WordRenderer;
 /**
  * 
  */
-public interface KaptchaProducer
+public interface Producer
 {
 	/**
-	 * Create an image which have witten a distorted text, text given 
-	 * as parameter. The result image is put on the output stream
+	 * Create an image which will have written a distorted text with text given 
+	 * as parameter. The resulting image is put out on the output stream
 	 * 
 	 * @param stream the OutputStream where the image is written
-	 * @param text the distorted characters written on imagage
+	 * @param text the distorted characters written on image
 	 * @throws IOException if an error occurs during the image written on
 	 * output stream.
 	 */

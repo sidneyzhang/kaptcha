@@ -70,7 +70,7 @@ public class SimpleKaptcha extends HttpServlet implements Servlet
 		for (int i = 0; i < 6; i++) {
 			test += captchars[generator.nextInt(car) + 1];
 		}
-		// this key can be read from any controller to check wether user
+		// this key can be read from any controller to check whether user
 		// is a computer or human..
 		req.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, test);
 
@@ -89,21 +89,13 @@ public class SimpleKaptcha extends HttpServlet implements Servlet
 		
 		graphics.fillRect(0, 0, bi.getWidth(), bi.getHeight());
 	  
-		//graphics.drawLine( 0, generator.nextInt(ImageHeight)+1, ImageWidth, generator.nextInt(ImageHeight)+1);
-
 		graphics.setColor(Color.black);
-//		AttributedString attstr = new AttributedString(test);
-
-		//graphics.drawString(attstr.getIterator(), 0, 50);
-
-		//Font font = new Font()
 
 		TextLayout textTl =
 			new TextLayout(
 				test,
 				new Font("Courier", Font.BOLD, 70),
 				new FontRenderContext(null, true, false));
-//		AffineTransform textAt = graphics.getTransform();
 
 		textTl.draw(graphics, 4, 60);
 		int w = bi.getWidth();

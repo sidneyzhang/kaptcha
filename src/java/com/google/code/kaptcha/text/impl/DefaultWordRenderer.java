@@ -37,7 +37,7 @@ public class DefaultWordRenderer implements WordRenderer
 	 * 
 	 * @param word The word to be rendered.
 	 * @param width The width of the image to be created.
-	 * @param height The heigth of the image to be created.
+	 * @param height The height of the image to be created.
 	 * @return The BufferedImage created from the word,
 	 */
 	public BufferedImage renderWord(String word, int width, int height)
@@ -57,26 +57,25 @@ public class DefaultWordRenderer implements WordRenderer
 		Random generator = new Random();
 
 		char[] wc = word.toCharArray();
-		Color fontColor = Helper.getColor(props, Constants.KAPTCHA_TEXTPRODUCER_FONTC, Color.black);
+		Color fontColor = Helper.getColor(props, Constants.KAPTCHA_TEXTPRODUCER_FONT_COLOR, Color.black);
 		g2D.setColor(fontColor);
 		FontRenderContext frc = g2D.getFontRenderContext();
 		int startPosX = 25;
+
 		for (int i = 0; i < wc.length; i++)
 		{
 			char[] itchar = new char[] {wc[i]};
-			//g2D.setColor(Color.black);
+
 			int choiceFont = generator.nextInt(fonts.length);
 			Font itFont = fonts[choiceFont];
 			g2D.setFont(itFont);
-//			LineMetrics lmet = itFont.getLineMetrics(itchar, 0, itchar.length, frc);
+
 			GlyphVector gv = itFont.createGlyphVector(frc, itchar);
 			double charWitdth = gv.getVisualBounds().getWidth();
 
 			g2D.drawChars(itchar, 0, itchar.length, startPosX, 35);
 			startPosX = startPosX + (int)charWitdth + 2;
-			//
-
-		}// for next char array.
+		}
 
 		return image;
 	}

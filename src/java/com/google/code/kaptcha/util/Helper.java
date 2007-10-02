@@ -7,7 +7,7 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 
 import com.google.code.kaptcha.BackgroundProducer;
-import com.google.code.kaptcha.KaptchaProducer;
+import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;
@@ -39,13 +39,14 @@ public class Helper
 		String fontArr = props.getProperty(Constants.KAPTCHA_TEXTPRODUCER_FONTA);
 		if (fontArr == null)
 			return Helper.defaultFonts;
+
 		int fontsize = Helper.getIntegerFromString(props, Constants.KAPTCHA_TEXTPRODUCER_FONTS);
 		if (fontsize < 8)
 			fontsize = 40;
 		Font[] fonts = null;
+
 		try
 		{
-
 			StringTokenizer tokeniz = new StringTokenizer(fontArr, ",");
 			fonts = new Font[tokeniz.countTokens()];
 			int cnt = 0;
@@ -77,6 +78,7 @@ public class Helper
 		int ret = 0;
 		if (props == null)
 			return ret;
+
 		String val = props.getProperty(key);
 		if (val == null || val.equals(""))
 			return ret;
@@ -87,7 +89,7 @@ public class Helper
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
+			// Ignore
 		}
 		return ret;
 	}
@@ -120,7 +122,7 @@ public class Helper
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
+			// Ignore
 		}
 
 		return c;
@@ -152,7 +154,7 @@ public class Helper
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
+			// Ignore
 		}
 
 		if (retCol == null && defaultc == null)
@@ -170,19 +172,19 @@ public class Helper
 	public final static class ThingFactory
 	{
 		
-		public final static int NOISEIMP = 1;
-		public final static int OBSIMP = 2;
-		public final static int BGIMP = 3;
-		public final static int WRDREN = 4;
-		public final static int TXTPRDO = 5;
-		public final static int CPROD = 6;
+		public final static int NOISE_IMPL = 1;
+		public final static int OBSCURIFICATOR_IMPL = 2;
+		public final static int BACKGROUND_IMPL = 3;
+		public final static int WORDRENDERER_IMPL = 4;
+		public final static int TEXTPRODUCER_IMPL = 5;
+		public final static int PRODUCER_IMPL = 6;
 		
 		
 		public static Object loadImpl(int type, Properties props)
 		{
 			switch (type)
 			{
-				case NOISEIMP:
+				case NOISE_IMPL:
 					String nimp = props.getProperty(Constants.KAPTCHA_NOISE_IMPL);
 					if (nimp == null)
 						return new DefaultNoise(props);
@@ -199,7 +201,7 @@ public class Helper
 						return new DefaultNoise(props);
 					}
 
-				case OBSIMP:
+				case OBSCURIFICATOR_IMPL:
 					String obs = props.getProperty(Constants.KAPTCHA_OBSCURIFICATOR_IMPL);
 					if (obs == null)
 						return new WaterRipple(props);
@@ -214,7 +216,7 @@ public class Helper
 						System.out.print(e.getMessage());
 						return new WaterRipple(props);
 					}
-				case BGIMP:
+				case BACKGROUND_IMPL:
 					String bg = props.getProperty(Constants.KAPTCHA_BG_IMPL);
 					if (bg == null)
 						return new DefaultBackground(props);
@@ -230,7 +232,7 @@ public class Helper
 						return new DefaultBackground(props);
 					}
 
-				case WRDREN:
+				case WORDRENDERER_IMPL:
 					String wr = props.getProperty(Constants.KAPTCHA_WORDRENDERER_IMPL);
 					if (wr == null)
 						return new DefaultWordRenderer(props);
@@ -245,7 +247,7 @@ public class Helper
 						System.out.println(e.getMessage());
 						return new DefaultWordRenderer(props);
 					}
-				case TXTPRDO:
+				case TEXTPRODUCER_IMPL:
 					String txp = props.getProperty(Constants.KAPTCHA_TEXT_PRODUCER_IMPL);
 					if (txp == null)
 						return new DefaultTextCreator(props);
@@ -260,13 +262,13 @@ public class Helper
 						System.out.println(e.getMessage());
 						return new DefaultTextCreator(props);
 					}
-				case CPROD:
+				case PRODUCER_IMPL:
 					String cp = props.getProperty(Constants.KAPTCHA_PRODUCER_IMPL);
 					if (cp == null)
 						return new DefaultKaptcha(props);
 					try
 					{
-						KaptchaProducer p = (KaptchaProducer)Class.forName(cp).newInstance();
+						Producer p = (Producer)Class.forName(cp).newInstance();
 						p.setProperties(props);
 						return p;
 					}

@@ -15,13 +15,13 @@ public class Constants
 	public final static String KAPTCHA_NOISE_IMPL = "kaptcha.noise.impl";	
 	public final static String KAPTCHA_OBSCURIFICATOR_IMPL = "kaptcha.obscurificator.impl";
 	public final static String KAPTCHA_PRODUCER_IMPL = "kaptcha.producer.impl";
-	public final static String KAPTCHA_TEXTPRODUCER_CHARR = "kaptcha.char.arr";
-	public final static String KAPTCHA_TEXTPRODUCER_CHARRL = "kaptcha.char.arr.l";
+	public final static String KAPTCHA_TEXTPRODUCER_CHAR_STRING = "kaptcha.char.arr";
+	public final static String KAPTCHA_TEXTPRODUCER_CHAR_LENGTH = "kaptcha.char.arr.l";
 	public final static String KAPTCHA_TEXTPRODUCER_FONTA = "kaptcha.font.arr";
-	public final static String KAPTCHA_TEXTPRODUCER_FONTC = "kaptcha.font.color";
+	public final static String KAPTCHA_TEXTPRODUCER_FONT_COLOR = "kaptcha.font.color";
 	public final static String KAPTCHA_TEXTPRODUCER_FONTS = "kaptcha.font.size";
 	public final static String KAPTCHA_WORDRENDERER_IMPL = "kaptcha.word.impl";
 	public static final String KAPTCHA_BCKGRND_CLR_FRM = "kaptcha.background.clear.from";
-	public static final String KAPTCHA_BCKGRND_CLR_T = "kaptcha.background.clear.to";
+	public static final String KAPTCHA_BCKGRND_CLR_TO = "kaptcha.background.clear.to";
 	public static final String KAPTCHA_BCKGRND_CLR = "kaptcha.background.clear";
 }

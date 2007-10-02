@@ -10,7 +10,7 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 import com.google.code.kaptcha.BackgroundProducer;
-import com.google.code.kaptcha.KaptchaProducer;
+import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.text.TextProducer;
@@ -23,7 +23,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 /**
  * @author testvoogd@hotmail.com
  */
-public class DefaultKaptcha implements KaptchaProducer
+public class DefaultKaptcha implements Producer
 {
 	private Properties props = null;
 	private boolean bbox = true;
@@ -59,10 +59,10 @@ public class DefaultKaptcha implements KaptchaProducer
 			}
 //			String wordR = props.getProperty(Constants.SIMPLE_CAPTCHA_WORDRENERER);
 
-			this.gimpy = (GimpyEngine)Helper.ThingFactory.loadImpl(Helper.ThingFactory.OBSIMP, props);
-			this.backGroundImp = (BackgroundProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.BGIMP, props);
-			this.wordRenderer = (WordRenderer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.WRDREN, props);
-			this.textProducer = (TextProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.TXTPRDO, props);
+			this.gimpy = (GimpyEngine)Helper.ThingFactory.loadImpl(Helper.ThingFactory.OBSCURIFICATOR_IMPL, props);
+			this.backGroundImp = (BackgroundProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.BACKGROUND_IMPL, props);
+			this.wordRenderer = (WordRenderer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.WORDRENDERER_IMPL, props);
+			this.textProducer = (TextProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.TEXTPRODUCER_IMPL, props);
 		}
 	}
 

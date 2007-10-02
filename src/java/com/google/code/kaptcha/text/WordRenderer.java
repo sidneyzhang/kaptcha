@@ -13,7 +13,7 @@ public interface WordRenderer
 	 * 
 	 * @param word The word to be rendered.
 	 * @param width The width of the image to be created.
-	 * @param height The heigth of the image to be created.
+	 * @param height The height of the image to be created.
 	 * @return The BufferedImage created from the word,
 	 */
 	public abstract BufferedImage renderWord(String word, int width, int height);

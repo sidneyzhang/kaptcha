@@ -3,7 +3,7 @@ package com.google.code.kaptcha.text.impl;
 import java.util.Properties;
 
 /**
- * TextProducer Implementation that will return chinese characters..
+ * TextProducer Implementation that will return Chinese characters..
  */
 public class ChineseTextProducer extends DefaultTextCreator
 {

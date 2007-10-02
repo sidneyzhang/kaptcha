@@ -5,7 +5,7 @@ import java.util.Properties;
 /**
  *
  */
-public interface GimpyEngine extends KaptchaEngine
+public interface GimpyEngine extends Engine
 {
 	public void setProperties(Properties props);
 }
