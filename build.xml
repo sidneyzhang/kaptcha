@@ -119,7 +119,7 @@
 			<classpath refid="classpath" />
 			<fileset dir="${base.dir}/src/java"/>
 			<doctitle><![CDATA[<h1>kaptcha</h1>]]></doctitle>
-			<bottom><![CDATA[<i>Copyright &#169; ${YEAR} http://code.google.com/p/kaptcha/. All Rights Reserved. Build version: ${version}</i>]]></bottom>
+			<bottom><![CDATA[<i>Copyright &#169; ${YEAR} <a href="http://code.google.com/p/kaptcha/">Kaptcha</a>. All Rights Reserved. Build version: ${version}</i>]]></bottom>
 		</javadoc>
 	</target>
 
