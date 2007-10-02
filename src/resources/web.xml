@@ -5,7 +5,6 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
-	<!-- This servlet  -->
 	<servlet>
 		<servlet-name>SimpleKaptcha</servlet-name>
 		<servlet-class>com.google.code.kaptcha.servlet.SimpleKaptcha</servlet-class>
@@ -15,94 +14,13 @@
 		<servlet-name>Kaptcha</servlet-name>
 		<servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
 
-		<!--border around captcha. Legal values are yes or no. Defaults to yes Other values will be ignored-->
+		<!--
+			For a complete list of Init Parameters, please see:
+			http://code.google.com/p/kaptcha/wiki/ConfigParameters
+		-->
 		<init-param>
 			<param-name>kaptcha.border</param-name>
 			<param-value>yes</param-value>
-		</init-param>
-		<!--color of the border. Legal values are r,g,b(and optional alpaha) or white,black,etc. Other values will be ignored-->
-		<init-param>
-			<param-name>kaptcha.border.color</param-name>
-			<param-value>black</param-value>
-		</init-param>
-		<!--thickness of the border around captcha. Legal values are > 0 other values will be ignored. Defaults to one-->
-		<init-param>
-			<param-name>kaptcha.border.th</param-name>
-			<param-value>1</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.obscurificator.impl</param-name>
-			<!--<param-value>com.google.code.kaptcha.impl.ShadowGimpy</param-value>-->
-			<param-value>com.google.code.kaptcha.impl.WaterRipple</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.producer.impl</param-name>
-			<param-value>com.google.code.kaptcha.impl.DefaultKaptcha</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.word.impl</param-name>
-			<param-value>com.google.code.kaptcha.text.impl.DefaultWordRenderer</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.text.producer.impl</param-name>
-			<param-value>com.google.code.kaptcha.text.DefaultTextCreator</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.char.arr</param-name>
-			<param-value>2,3,4,6,7,8,a,b,c,d,e,f,g,h,k,o,r,s,t,x,y</param-value>
-		</init-param>
-
-		<!--if default captcha producer is selected, this value represents the amount of chars 
-			that are supplied in the captcha. values below 2 are not exepted when omitted defaults to 5-->
-		<init-param>
-			<param-name>kaptcha.char.arr.l</param-name>
-			<param-value>6</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.font.arr</param-name>
-			<param-value>Arial,Helvetica,Courier,TimesRoman</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.font.size</param-name>
-			<param-value>40</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.font.color</param-name>
-			<param-value>166,31,255</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.bg.impl</param-name>
-			<param-value>com.google.code.kaptcha.impl.DefaultBackground</param-value>
-		</init-param>
-
-		<!--values can be either red,yellow,blue,cya etc or r,g,b,alpha value-->
-		<init-param>
-			<param-name>kaptcha.background.clear.to</param-name>
-			<param-value>255,255,255</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.background.clear.from</param-name>
-			<param-value>75,75,255</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.noise.impl</param-name>
-			<param-value>com.google.code.kaptcha.impl.DefaultNoise</param-value>
-		</init-param>
-
-		<init-param>
-			<param-name>kaptcha.noise.color</param-name>
-			<param-value>166,31,255</param-value>
 		</init-param>
 	</servlet>
 
