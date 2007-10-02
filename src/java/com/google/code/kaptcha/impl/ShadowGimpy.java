@@ -50,8 +50,7 @@ public class ShadowGimpy implements GimpyEngine
 
 		wfilter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
 
-		//apply filter water              
-
+		//apply filter water
 		FilteredImageSource wfiltered = new FilteredImageSource(image.getSource(), wfilter);
 
 		Image img = Toolkit.getDefaultToolkit().createImage(wfiltered);

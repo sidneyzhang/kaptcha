@@ -36,11 +36,11 @@ public class Helper
 		if (props == null)
 			return Helper.defaultFonts;
 
-		String fontArr = props.getProperty(Constants.KAPTCHA_TEXTPRODUCER_FONTA);
+		String fontArr = props.getProperty(Constants.KAPTCHA_TEXTPRODUCER_FONT_NAMES);
 		if (fontArr == null)
 			return Helper.defaultFonts;
 
-		int fontsize = Helper.getIntegerFromString(props, Constants.KAPTCHA_TEXTPRODUCER_FONTS);
+		int fontsize = Helper.getIntegerFromString(props, Constants.KAPTCHA_TEXTPRODUCER_FONT_SIZE);
 		if (fontsize < 8)
 			fontsize = 40;
 		Font[] fonts = null;
@@ -217,7 +217,7 @@ public class Helper
 						return new WaterRipple(props);
 					}
 				case BACKGROUND_IMPL:
-					String bg = props.getProperty(Constants.KAPTCHA_BG_IMPL);
+					String bg = props.getProperty(Constants.KAPTCHA_BACKGROUND_IMPL);
 					if (bg == null)
 						return new DefaultBackground(props);
 					try
@@ -248,7 +248,7 @@ public class Helper
 						return new DefaultWordRenderer(props);
 					}
 				case TEXTPRODUCER_IMPL:
-					String txp = props.getProperty(Constants.KAPTCHA_TEXT_PRODUCER_IMPL);
+					String txp = props.getProperty(Constants.KAPTCHA_TEXTPRODUCER_IMPL);
 					if (txp == null)
 						return new DefaultTextCreator(props);
 					try

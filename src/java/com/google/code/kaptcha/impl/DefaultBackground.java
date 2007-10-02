@@ -39,8 +39,8 @@ public class DefaultBackground implements BackgroundProducer
 		int width = image.getWidth();
 		int height = image.getHeight();
 
-		Color from = Helper.getColor(props, Constants.KAPTCHA_BCKGRND_CLR_FRM, Color.lightGray);
-		Color to = Helper.getColor(props, Constants.KAPTCHA_BCKGRND_CLR_TO, Color.white);
+		Color from = Helper.getColor(props, Constants.KAPTCHA_BACKGROUND_CLR_FROM, Color.lightGray);
+		Color to = Helper.getColor(props, Constants.KAPTCHA_BACKGROUND_CLR_TO, Color.white);
 
 		//create an opaque image
 		BufferedImage resultImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

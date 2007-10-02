@@ -53,11 +53,10 @@ public class DefaultKaptcha implements Producer
 			if (bbox)
 			{
 				boxColor = Helper.getColor(this.props, Constants.KAPTCHA_BORDER_COLOR, Color.black);
-				boxThick = Helper.getIntegerFromString(props, Constants.KAPTCHA_BORDER_TH);
+				boxThick = Helper.getIntegerFromString(props, Constants.KAPTCHA_BORDER_THICKNESS);
 				if (boxThick == 0)
 					boxThick = 1;
 			}
-//			String wordR = props.getProperty(Constants.SIMPLE_CAPTCHA_WORDRENERER);
 
 			this.gimpy = (GimpyEngine)Helper.ThingFactory.loadImpl(Helper.ThingFactory.OBSCURIFICATOR_IMPL, props);
 			this.backGroundImp = (BackgroundProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.BACKGROUND_IMPL, props);
@@ -72,16 +71,16 @@ public class DefaultKaptcha implements Producer
 	private int w = 200;
 
 	/**
-	 * The heigth image in pixels. 
+	 * The height image in pixels. 
 	 */
 	private int h = 50;
 
 	/**
-	 * Create an image which have witten a distorted text, text given 
+	 * Create an image which have written a distorted text, text given 
 	 * as parameter. The result image is put on the output stream
 	 * 
 	 * @param stream the OutputStrea where the image is written
-	 * @param text the distorted characters written on imagage
+	 * @param text the distorted characters written on image
 	 * @throws IOException if an error occurs during the image written on
 	 * output stream.
 	 */
@@ -160,9 +159,6 @@ public class DefaultKaptcha implements Producer
 
 	private void drawBox(Graphics2D graphics)
 	{
-
-		//#d0 a0 3f; 
-
 		graphics.setColor(this.boxColor);
 
 		if (this.boxThick != 1)
@@ -183,18 +179,11 @@ public class DefaultKaptcha implements Producer
 		d3 = new Line2D.Double(w - 1, h - 1, w - 1, 0);
 
 		graphics.draw(d3);
-
 	}
 
 	public void setBackGroundImageProducer(BackgroundProducer background)
 	{
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setObscurificator()
-	{
-		// TODO Auto-generated method stub
+		this.backGroundImp = background;
 
 	}
 
@@ -220,7 +209,6 @@ public class DefaultKaptcha implements Producer
 	public void setObscurificator(GimpyEngine engine)
 	{
 		this.gimpy = engine;
-
 	}
 
 	/**
@@ -228,7 +216,7 @@ public class DefaultKaptcha implements Producer
 	 */
 	public void setTextProducer(TextProducer textP)
 	{
-		// TODO Auto-generated method stub
+		this.textProducer = textP;
 	}
 
 	public String createText()
