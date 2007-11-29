@@ -68,7 +68,7 @@
 	</target>
 
 	<target name="war" depends="jar">
-		<war destfile="${build.dir}/${name}-${version}.war" 
+		<war destfile="${build.dir}/${name}.war" 
 			webxml="${base.dir}/src/resources/web.xml">
 
 			<fileset dir="${base.dir}/doc/">
