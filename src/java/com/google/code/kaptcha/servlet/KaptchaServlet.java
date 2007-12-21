@@ -34,7 +34,9 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 	{
 
 		resp.setHeader("Pragma", "no-cache");
-		resp.setHeader("Cache-Control", "no-cache");
+		resp.setHeader("Cache-Control", "no-cache, no-store");
+		resp.setDateHeader("Expires", 0);
+		resp.setContentType("image/jpeg");
 
 		// this key can be read from any controller to check whether user
 		// is a computer or human..
