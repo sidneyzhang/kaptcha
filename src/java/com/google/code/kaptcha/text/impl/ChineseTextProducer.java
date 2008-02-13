@@ -1,13 +1,15 @@
 package com.google.code.kaptcha.text.impl;
 
-import java.util.Properties;
+import java.util.Random;
+
+import com.google.code.kaptcha.text.TextProducer;
 
 /**
  * TextProducer Implementation that will return Chinese characters..
  */
-public class ChineseTextProducer extends DefaultTextCreator
+public class ChineseTextProducer implements TextProducer
 {
-	private String[] simplfiedC = new String[] {
+    private String[] simplifiedChineseTexts = new String[] {
 		"包括焦点",
 		"新道消点",
 		"服分目搜",
@@ -24,13 +26,12 @@ public class ChineseTextProducer extends DefaultTextCreator
 		"樹瀏覽搜"
 		};
 
-	public ChineseTextProducer(Properties props)
-	{
-		super(props);
-	}
-
+    /**
+	 * @return random Chinese text
+	 */
 	public String getText()
 	{
-		return simplfiedC[generator.nextInt(simplfiedC.length)];
+		return simplifiedChineseTexts[new Random()
+				.nextInt(simplifiedChineseTexts.length)];
 	}
 }

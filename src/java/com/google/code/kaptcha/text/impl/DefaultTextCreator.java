@@ -1,104 +1,39 @@
 package com.google.code.kaptcha.text.impl;
 
-import java.util.Properties;
 import java.util.Random;
-import java.util.StringTokenizer;
 
-import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.Configurable;
 import com.google.code.kaptcha.text.TextProducer;
+import com.google.code.kaptcha.util.ConfigManager;
 
 /**
- * 
+ * {@link DefaultTextCreator} creates random text from an array of characters
+ * with specified length.
  */
-public class DefaultTextCreator implements TextProducer
+public class DefaultTextCreator implements TextProducer, Configurable
 {
-	public Random generator = new Random();
+    private ConfigManager configManager;
 
-	@SuppressWarnings("unused")
-	private Properties props = null;
+    /**
+     * @return the random text
+     */
+    public String getText()
+    {
+        int length = configManager.getTextProducerCharLength();
+        char[] chars = configManager.getTextProducerCharString();
+        int randomContext = chars.length - 1;
+        Random rand = new Random();
+        StringBuffer text = new StringBuffer();
+        for (int i = 0; i < length; i++)
+        {
+            text.append(chars[rand.nextInt(randomContext) + 1]);
+        }
 
-	private int capLength = 5;
-	private char[] captchars =
-		new char[] {
-			'a',
-			'b',
-			'c',
-			'd',
-			'e',
-			'2',
-			'3',
-			'4',
-			'5',
-			'6',
-			'7',
-			'8',
-			'g',
-			'f',
-			'y',
-			'n',
-			'm',
-			'n',
-			'p',
-			'w',
-			'x' };
+        return text.toString();
+    }
 
-	public DefaultTextCreator(Properties props)
-	{
-		this.props = props;
-		setProperties(props);
-	}
-
-	public void setCharArray(char[] chars)
-	{
-		this.captchars = chars;
-	}
-	 
-	public void setProperties(Properties props)
-	{
-		if (props != null && props.containsKey(Constants.KAPTCHA_TEXTPRODUCER_CHAR_STRING))
-		{
-			String charString = props.getProperty(Constants.KAPTCHA_TEXTPRODUCER_CHAR_STRING);
-			if (charString != null && !charString.equals(""))
-			{
-
-				StringTokenizer token = new StringTokenizer(charString, ",");
-				this.captchars = new char[token.countTokens()];
-				int cnt = 0;
-				while (token.hasMoreTokens())
-				{
-					captchars[cnt] = ((String)token.nextElement()).toCharArray()[0];
-					cnt++;
-				}
-
-			}
-
-			String l = props.getProperty(Constants.KAPTCHA_TEXTPRODUCER_CHAR_LENGTH);
-			if (l != null && !l.equals(""))
-			{
-				try
-				{
-					capLength = Integer.parseInt(l);
-				}
-				catch (Exception e)
-				{
-					// Ignore
-				}
-				if (capLength < 2)
-					capLength = 5;
-			}
-		}
-	}
-
-	public String getText()
-	{
-		int car = captchars.length - 1;
-
-		String capText = "";
-		for (int i = 0; i < capLength; i++)
-		{
-			capText += captchars[generator.nextInt(car) + 1];
-		}
-
-		return capText;
-	}
+    public void setConfigManager(ConfigManager configManager)
+    {
+        this.configManager = configManager;
+    }
 }

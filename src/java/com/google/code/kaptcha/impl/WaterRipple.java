@@ -5,87 +5,71 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
-import java.util.Properties;
 
+import com.google.code.kaptcha.Configurable;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;
-import com.google.code.kaptcha.util.Helper;
+import com.google.code.kaptcha.util.ConfigManager;
 import com.jhlabs.image.RippleFilter;
 import com.jhlabs.image.TransformFilter;
 import com.jhlabs.image.WaterFilter;
 
 /**
- * 
+ * {@link WaterRipple} adds water ripple effect to an image.
  */
-public class WaterRipple implements GimpyEngine
+public class WaterRipple implements GimpyEngine, Configurable
 {
+    private ConfigManager configManager;
 
-	private Properties props = null;
+    /**
+     * Applies distortion by adding water ripple effect.
+     *
+     * @param baseImagethe
+     *            base image
+     * @return the distorted image
+     */
+    public BufferedImage getDistortedImage(BufferedImage baseImage)
+    {
+        NoiseProducer noiseProducer = configManager.getNoiseImpl();
+        BufferedImage distortedImage = new BufferedImage(baseImage.getWidth(),
+                baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-	public WaterRipple(Properties props)
-	{
-		this.props = props;
-	}
+        Graphics2D graphics = (Graphics2D) distortedImage.getGraphics();
 
-	public WaterRipple()
-	{
-	}
+        RippleFilter rippleFilter = new RippleFilter();
+        rippleFilter.setWaveType(RippleFilter.SINGLEFRAME);
+        rippleFilter.setXAmplitude(2.6f);
+        rippleFilter.setYAmplitude(1.7f);
+        rippleFilter.setXWavelength(15);
+        rippleFilter.setYWavelength(5);
+        rippleFilter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
 
-	/**
-	 * Apply Ripple and Water ImageFilters to distort the image.
-	 * 
-	 * @param image the image to be distort
-	 * @return the distort image
-	 */
-	public BufferedImage getDistortedImage(BufferedImage image)
-	{
+        WaterFilter waterFilter = new WaterFilter();
+        waterFilter.setAmplitude(4);
+        waterFilter.setAntialias(true);
+        waterFilter.setPhase(15);
+        waterFilter.setWavelength(70);
 
-		BufferedImage imageDistorted =
-			new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        FilteredImageSource filteredImageSource = new FilteredImageSource(
+                baseImage.getSource(), waterFilter);
+        Image effectImage = Toolkit.getDefaultToolkit().createImage(
+                filteredImageSource);
 
-		Graphics2D graph = (Graphics2D)imageDistorted.getGraphics();
+        filteredImageSource = new FilteredImageSource(effectImage.getSource(),
+                rippleFilter);
+        effectImage = Toolkit.getDefaultToolkit().createImage(
+                filteredImageSource);
+        graphics.drawImage(effectImage, 0, 0, null, null);
 
-		//create filter ripple
-		RippleFilter filter = new RippleFilter();
-		filter.setWaveType(RippleFilter.SINGLEFRAME);
-		filter.setXAmplitude(2.6f);
-		filter.setYAmplitude(1.7f);
-		filter.setXWavelength(15);
-		filter.setYWavelength(5);
-		filter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
+        graphics.dispose();
 
-		//create water filter                
-		WaterFilter water = new WaterFilter();
-		water.setAmplitude(4);
-		water.setAntialias(true);
-		water.setPhase(15);
-		water.setWavelength(70);
+        noiseProducer.makeNoise(distortedImage, .1f, .1f, .25f, .25f);
+        noiseProducer.makeNoise(distortedImage, .1f, .25f, .5f, .9f);
+        return distortedImage;
+    }
 
-		//apply filter water              
-		FilteredImageSource filtered = new FilteredImageSource(image.getSource(), water);
-		Image img = Toolkit.getDefaultToolkit().createImage(filtered);
-
-		//apply filter ripple
-		filtered = new FilteredImageSource(img.getSource(), filter);
-		img = Toolkit.getDefaultToolkit().createImage(filtered);
-
-		graph.drawImage(img, 0, 0, null, null);
-
-		graph.dispose();
-
-		//draw line over the image and/or text
-		NoiseProducer noise = (NoiseProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.NOISE_IMPL, props);
-		noise.makeNoise(imageDistorted, .1f, .1f, .25f, .25f);
-		noise.makeNoise(imageDistorted, .1f, .25f, .5f, .9f);
-		return imageDistorted;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see com.google.code.kaptcha.GimpyEngine#setProperties(java.util.Properties)
-	 */
-	public void setProperties(Properties props)
-	{
-		this.props = props;
-	}
+    public void setConfigManager(ConfigManager configManager)
+    {
+        this.configManager = configManager;
+    }
 }

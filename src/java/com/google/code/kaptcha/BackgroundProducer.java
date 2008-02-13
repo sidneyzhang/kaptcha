@@ -1,13 +1,11 @@
 package com.google.code.kaptcha;
 
 import java.awt.image.BufferedImage;
-import java.util.Properties;
 
 /**
- * 
+ * {@link BackgroundProducer} is responsible for adding background to an image.
  */
 public interface BackgroundProducer
 {
-	public abstract void setProperties(Properties props);
-	public abstract BufferedImage addBackground(BufferedImage image);
+    public abstract BufferedImage addBackground(BufferedImage image);
 }

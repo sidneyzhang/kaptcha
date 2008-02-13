@@ -1,11 +1,15 @@
 package com.google.code.kaptcha;
 
-import java.util.Properties;
+import java.awt.image.BufferedImage;
 
 /**
- *
+ * {@link GimpyEngine} is responsible for applying image distortion.
  */
-public interface GimpyEngine extends Engine
+public interface GimpyEngine
 {
-	public void setProperties(Properties props);
+    /**
+     * @param baseImage the base image
+     * @return the image with distortion applied to the base image
+     */
+    public BufferedImage getDistortedImage(BufferedImage baseImage);
 }

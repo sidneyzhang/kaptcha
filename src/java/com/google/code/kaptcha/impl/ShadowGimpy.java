@@ -5,73 +5,74 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
-import java.util.Properties;
 import java.util.Random;
 
+import com.google.code.kaptcha.Configurable;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;
-import com.google.code.kaptcha.util.Helper;
+import com.google.code.kaptcha.util.ConfigManager;
 import com.jhlabs.image.RippleFilter;
 import com.jhlabs.image.ShadowFilter;
 import com.jhlabs.image.TransformFilter;
 
 /**
- * 
+ * {@link ShadowGimpy} adds shadow to the text on the image and two noises.
  */
-public class ShadowGimpy implements GimpyEngine
+public class ShadowGimpy implements GimpyEngine, Configurable
 {
-	private Properties props = null;
+    private ConfigManager configManager;
 
-	public BufferedImage getDistortedImage(BufferedImage image)
-	{
+    /**
+     * Applies distortion by adding shadow to the text and also two noises.
+     *
+     * @param baseImagethe
+     *            base image
+     * @return the distorted image
+     */
+    public BufferedImage getDistortedImage(BufferedImage baseImage)
+    {
+        NoiseProducer noiseProducer = configManager.getNoiseImpl();
+        BufferedImage distortedImage = new BufferedImage(baseImage.getWidth(),
+                baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-		BufferedImage imageDistorted =
-			new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graph = (Graphics2D) distortedImage.getGraphics();
 
-		Graphics2D graph = (Graphics2D)imageDistorted.getGraphics();
+        ShadowFilter shadowFilter = new ShadowFilter();
+        shadowFilter.setRadius(10);
 
-		//create filter ripple
-		//SphereFilter filter = new SphereFilter();
-		//double d = 1.2;
-		//filter.setRefractionIndex(d);
+        Random rand = new Random();
 
-		ShadowFilter filter = new ShadowFilter();
-		filter.setRadius(10);
+        RippleFilter rippleFilter = new RippleFilter();
+        rippleFilter.setWaveType(RippleFilter.SINGLEFRAME);
+        rippleFilter.setXAmplitude(7.6f);
+        rippleFilter.setYAmplitude(rand.nextFloat() + 1.0f);
+        rippleFilter.setXWavelength(rand.nextInt(7) + 8);
+        rippleFilter.setYWavelength(rand.nextInt(3) + 2);
+        rippleFilter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
 
-		Random rand = new Random();
+        rippleFilter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
 
-		RippleFilter wfilter = new RippleFilter();
-		wfilter.setWaveType(RippleFilter.SINGLEFRAME);
-		wfilter.setXAmplitude(7.6f);
-		wfilter.setYAmplitude(rand.nextFloat() + 1.0f);
-		wfilter.setXWavelength(rand.nextInt(7) + 8);
-		wfilter.setYWavelength(rand.nextInt(3) + 2);
-		wfilter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
+        FilteredImageSource rippleFilteredImageSource = new FilteredImageSource(
+                baseImage.getSource(), rippleFilter);
+        Image effectImage = Toolkit.getDefaultToolkit().createImage(
+                rippleFilteredImageSource);
+        FilteredImageSource shadowFilteredImageSource = new FilteredImageSource(
+                effectImage.getSource(), shadowFilter);
+        effectImage = Toolkit.getDefaultToolkit().createImage(
+                shadowFilteredImageSource);
 
-		wfilter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
+        graph.drawImage(effectImage, 0, 0, null, null);
+        graph.dispose();
 
-		//apply filter water
-		FilteredImageSource wfiltered = new FilteredImageSource(image.getSource(), wfilter);
+        // draw lines over the image and/or text
+        noiseProducer.makeNoise(distortedImage, .1f, .1f, .25f, .25f);
+        noiseProducer.makeNoise(distortedImage, .1f, .25f, .5f, .9f);
 
-		Image img = Toolkit.getDefaultToolkit().createImage(wfiltered);
-		img = Toolkit.getDefaultToolkit().createImage(wfiltered);
+        return distortedImage;
+    }
 
-		FilteredImageSource filtered = new FilteredImageSource(img.getSource(), filter);
-		img = Toolkit.getDefaultToolkit().createImage(filtered);
-
-		graph.drawImage(img, 0, 0, null, null);
-
-		graph.dispose();
-
-		//draw line over the image and/or text
-		NoiseProducer noise = (NoiseProducer)Helper.ThingFactory.loadImpl(Helper.ThingFactory.NOISE_IMPL, props);
-		noise.makeNoise(imageDistorted, .1f, .1f, .25f, .25f);
-		noise.makeNoise(imageDistorted, .1f, .25f, .5f, .9f);
-		return imageDistorted;
-	}
-
-	public void setProperties(Properties props)
-	{
-		this.props = props;
-	}
+    public void setConfigManager(ConfigManager configManager)
+    {
+        this.configManager = configManager;
+    }
 }

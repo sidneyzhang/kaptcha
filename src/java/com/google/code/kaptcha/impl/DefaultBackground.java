@@ -6,67 +6,65 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.Properties;
 
 import com.google.code.kaptcha.BackgroundProducer;
-import com.google.code.kaptcha.Constants;
-import com.google.code.kaptcha.util.Helper;
+import com.google.code.kaptcha.Configurable;
+import com.google.code.kaptcha.util.ConfigManager;
 
 
 /**
- *
+ * Default implementation of {@link BackgroundProducer}, adds a gradient
+ * background to an image. The gradient color is diagonal and made of Color From
+ * (top left) and Color To (bottom right).
  */
-public class DefaultBackground implements BackgroundProducer
+public class DefaultBackground implements BackgroundProducer, Configurable
 {
-	private Properties props = null;
+    private ConfigManager configManager;
 
-	public void setProperties(Properties props)
-	{
-		this.props = props;
-	}
+    /**
+     * @baseImage the base image
+     * @return an image with a gradient background added to the base image.
+     */
+    public BufferedImage addBackground(BufferedImage baseImage)
+    {
+        Color colorFrom = configManager.getBackgroundColorFrom();
+        Color colorTo = configManager.getBackgroundColorTo();
 
-	public DefaultBackground()
-	{
-	}
+        int width = baseImage.getWidth();
+        int height = baseImage.getHeight();
 
-	public DefaultBackground(Properties props)
-	{
-		this.props = props;
-	}
+        // create an opaque image
+        BufferedImage imageWithBackground = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_RGB);
 
-	public BufferedImage addBackground(BufferedImage image)
-	{
-		int width = image.getWidth();
-		int height = image.getHeight();
+        Graphics2D graph = (Graphics2D) imageWithBackground.getGraphics();
+        RenderingHints hints = new RenderingHints(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_OFF);
 
-		Color from = Helper.getColor(props, Constants.KAPTCHA_BACKGROUND_CLR_FROM, Color.lightGray);
-		Color to = Helper.getColor(props, Constants.KAPTCHA_BACKGROUND_CLR_TO, Color.white);
+        hints.add(new RenderingHints(RenderingHints.KEY_COLOR_RENDERING,
+                RenderingHints.VALUE_COLOR_RENDER_QUALITY));
+        hints.add(new RenderingHints(RenderingHints.KEY_ALPHA_INTERPOLATION,
+                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY));
 
-		//create an opaque image
-		BufferedImage resultImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        hints.add(new RenderingHints(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY));
 
-		Graphics2D graph = (Graphics2D)resultImage.getGraphics();
-		RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+        graph.setRenderingHints(hints);
 
-		hints.add(new RenderingHints(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY));
-		hints.add(new RenderingHints(RenderingHints.KEY_ALPHA_INTERPOLATION,
-										RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY));
+        GradientPaint paint = new GradientPaint(0, 0, colorFrom, width, height,
+                colorTo);
+        graph.setPaint(paint);
+        graph.fill(new Rectangle2D.Double(0, 0, width, height));
 
-		hints.add(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+        // draw the transparent image over the background
+        graph.drawImage(baseImage, 0, 0, null);
 
-		graph.setRenderingHints(hints);
+        return imageWithBackground;
+    }
 
-		//create the gradient color
-		GradientPaint ytow = new GradientPaint(0, 0, from, width, height, to);
-
-		graph.setPaint(ytow);
-		//draw gradient color
-		graph.fill(new Rectangle2D.Double(0, 0, width, height));
-
-		//draw the transparent image over the background
-		graph.drawImage(image, 0, 0, null);
-
-		return resultImage;
-	}
-
+    public void setConfigManager(ConfigManager configManager)
+    {
+        this.configManager = configManager;
+    }
 }
