@@ -12,28 +12,28 @@ import com.google.code.kaptcha.util.ConfigManager;
  */
 public class DefaultTextCreator implements TextProducer, Configurable
 {
-    private ConfigManager configManager;
+	private ConfigManager configManager;
 
-    /**
-     * @return the random text
-     */
-    public String getText()
-    {
-        int length = configManager.getTextProducerCharLength();
-        char[] chars = configManager.getTextProducerCharString();
-        int randomContext = chars.length - 1;
-        Random rand = new Random();
-        StringBuffer text = new StringBuffer();
-        for (int i = 0; i < length; i++)
-        {
-            text.append(chars[rand.nextInt(randomContext) + 1]);
-        }
+	/**
+	 * @return the random text
+	 */
+	public String getText()
+	{
+		int length = configManager.getTextProducerCharLength();
+		char[] chars = configManager.getTextProducerCharString();
+		int randomContext = chars.length - 1;
+		Random rand = new Random();
+		StringBuffer text = new StringBuffer();
+		for (int i = 0; i < length; i++)
+		{
+			text.append(chars[rand.nextInt(randomContext) + 1]);
+		}
 
-        return text.toString();
-    }
+		return text.toString();
+	}
 
-    public void setConfigManager(ConfigManager configManager)
-    {
-        this.configManager = configManager;
-    }
+	public void setConfigManager(ConfigManager configManager)
+	{
+		this.configManager = configManager;
+	}
 }

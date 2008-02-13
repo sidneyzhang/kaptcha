@@ -7,9 +7,10 @@ import java.awt.image.BufferedImage;
  */
 public interface GimpyEngine
 {
-    /**
-     * @param baseImage the base image
-     * @return the image with distortion applied to the base image
-     */
-    public BufferedImage getDistortedImage(BufferedImage baseImage);
+	/**
+	 * @param baseImage
+	 *            the base image
+	 * @return the image with distortion applied to the base image
+	 */
+	public BufferedImage getDistortedImage(BufferedImage baseImage);
 }

@@ -11,7 +11,6 @@ import com.google.code.kaptcha.BackgroundProducer;
 import com.google.code.kaptcha.Configurable;
 import com.google.code.kaptcha.util.ConfigManager;
 
-
 /**
  * Default implementation of {@link BackgroundProducer}, adds a gradient
  * background to an image. The gradient color is diagonal and made of Color From
@@ -19,52 +18,52 @@ import com.google.code.kaptcha.util.ConfigManager;
  */
 public class DefaultBackground implements BackgroundProducer, Configurable
 {
-    private ConfigManager configManager;
+	private ConfigManager configManager;
 
-    /**
-     * @baseImage the base image
-     * @return an image with a gradient background added to the base image.
-     */
-    public BufferedImage addBackground(BufferedImage baseImage)
-    {
-        Color colorFrom = configManager.getBackgroundColorFrom();
-        Color colorTo = configManager.getBackgroundColorTo();
+	/**
+	 * @baseImage the base image
+	 * @return an image with a gradient background added to the base image.
+	 */
+	public BufferedImage addBackground(BufferedImage baseImage)
+	{
+		Color colorFrom = configManager.getBackgroundColorFrom();
+		Color colorTo = configManager.getBackgroundColorTo();
 
-        int width = baseImage.getWidth();
-        int height = baseImage.getHeight();
+		int width = baseImage.getWidth();
+		int height = baseImage.getHeight();
 
-        // create an opaque image
-        BufferedImage imageWithBackground = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_RGB);
+		// create an opaque image
+		BufferedImage imageWithBackground = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_RGB);
 
-        Graphics2D graph = (Graphics2D) imageWithBackground.getGraphics();
-        RenderingHints hints = new RenderingHints(
-                RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_OFF);
+		Graphics2D graph = (Graphics2D) imageWithBackground.getGraphics();
+		RenderingHints hints = new RenderingHints(
+				RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_OFF);
 
-        hints.add(new RenderingHints(RenderingHints.KEY_COLOR_RENDERING,
-                RenderingHints.VALUE_COLOR_RENDER_QUALITY));
-        hints.add(new RenderingHints(RenderingHints.KEY_ALPHA_INTERPOLATION,
-                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY));
+		hints.add(new RenderingHints(RenderingHints.KEY_COLOR_RENDERING,
+				RenderingHints.VALUE_COLOR_RENDER_QUALITY));
+		hints.add(new RenderingHints(RenderingHints.KEY_ALPHA_INTERPOLATION,
+				RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY));
 
-        hints.add(new RenderingHints(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY));
+		hints.add(new RenderingHints(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY));
 
-        graph.setRenderingHints(hints);
+		graph.setRenderingHints(hints);
 
-        GradientPaint paint = new GradientPaint(0, 0, colorFrom, width, height,
-                colorTo);
-        graph.setPaint(paint);
-        graph.fill(new Rectangle2D.Double(0, 0, width, height));
+		GradientPaint paint = new GradientPaint(0, 0, colorFrom, width, height,
+				colorTo);
+		graph.setPaint(paint);
+		graph.fill(new Rectangle2D.Double(0, 0, width, height));
 
-        // draw the transparent image over the background
-        graph.drawImage(baseImage, 0, 0, null);
+		// draw the transparent image over the background
+		graph.drawImage(baseImage, 0, 0, null);
 
-        return imageWithBackground;
-    }
+		return imageWithBackground;
+	}
 
-    public void setConfigManager(ConfigManager configManager)
-    {
-        this.configManager = configManager;
-    }
+	public void setConfigManager(ConfigManager configManager)
+	{
+		this.configManager = configManager;
+	}
 }

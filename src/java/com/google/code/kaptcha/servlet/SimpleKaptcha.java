@@ -1,4 +1,5 @@
 package com.google.code.kaptcha.servlet;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -22,7 +23,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 /**
  * This servlet generates the image within the doGet
  * 
- * @author		testvoogd@hotmail.com
+ * @author testvoogd@hotmail.com
  */
 @SuppressWarnings("serial")
 public class SimpleKaptcha extends HttpServlet implements Servlet
@@ -30,35 +31,16 @@ public class SimpleKaptcha extends HttpServlet implements Servlet
 
 	private Random generator = new Random();
 
-	private static char[] captchars =
-		new char[] {
-			'a',
-			'b',
-			'c',
-			'd',
-			'e',
-			'2',
-			'3',
-			'4',
-			'5',
-			'6',
-			'7',
-			'8',
-			'g',
-			'f',
-			'y',
-			'n',
-			'm',
-			'n',
-			'p',
-			'w',
-			'x' };
+	private static char[] captchars = new char[]{
+			'a', 'b', 'c', 'd', 'e', '2', '3', '4', '5', '6', '7', '8', 'g',
+			'f', 'y', 'n', 'm', 'n', 'p', 'w', 'x'
+	};
 
 	/**
 	 * 
 	 */
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-		throws ServletException, IOException
+			throws ServletException, IOException
 	{
 
 		int ImageWidth = 200;
@@ -67,48 +49,37 @@ public class SimpleKaptcha extends HttpServlet implements Servlet
 		int car = captchars.length - 1;
 
 		String test = "";
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 6; i++)
+		{
 			test += captchars[generator.nextInt(car) + 1];
 		}
 		// this key can be read from any controller to check whether user
 		// is a computer or human..
 		req.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, test);
 
-		JPEGImageEncoder encoder =
-			JPEGCodec.createJPEGEncoder(resp.getOutputStream());
+		JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(resp
+				.getOutputStream());
 
-		BufferedImage bi =
-			new BufferedImage(
-				ImageWidth + 10,
-				ImageHeight,
+		BufferedImage bi = new BufferedImage(ImageWidth + 10, ImageHeight,
 				BufferedImage.TYPE_BYTE_INDEXED);
 
 		Graphics2D graphics = bi.createGraphics();
 		graphics.setBackground(Color.gray);
 		graphics.setColor(Color.gray);
-		
+
 		graphics.fillRect(0, 0, bi.getWidth(), bi.getHeight());
-	  
+
 		graphics.setColor(Color.black);
 
-		TextLayout textTl =
-			new TextLayout(
-				test,
-				new Font("Courier", Font.BOLD, 70),
-				new FontRenderContext(null, true, false));
+		TextLayout textTl = new TextLayout(test, new Font("Courier", Font.BOLD,
+				70), new FontRenderContext(null, true, false));
 
 		textTl.draw(graphics, 4, 60);
 		int w = bi.getWidth();
 		int h = bi.getHeight();
 		shear(graphics, w, h, Color.gray);
-		this.drawThickLine(
-			graphics,
-			0,
-			generator.nextInt(ImageHeight) + 1,
-			ImageWidth,
-			generator.nextInt(ImageHeight) + 1,
-			4,
-			Color.red);
+		this.drawThickLine(graphics, 0, generator.nextInt(ImageHeight) + 1,
+				ImageWidth, generator.nextInt(ImageHeight) + 1, 4, Color.red);
 
 		resp.setContentType("image/jpg");
 		encoder.encode(bi);
@@ -128,15 +99,15 @@ public class SimpleKaptcha extends HttpServlet implements Servlet
 		int frames = 15;
 		int phase = generator.nextInt(5) + 2;
 
-		for (int i = 0; i < h1; i++) {
-			double d =
-				(double) (period >> 1)
-					* Math.sin(
-						(double) i / (double) period
+		for (int i = 0; i < h1; i++)
+		{
+			double d = (double) (period >> 1)
+					* Math.sin((double) i / (double) period
 							+ (6.2831853071795862D * (double) phase)
-								/ (double) frames);
+							/ (double) frames);
 			g.copyArea(0, i, w1, 1, (int) d, 0);
-			if (borderGap) {
+			if (borderGap)
+			{
 				g.setColor(color);
 				g.drawLine((int) d, i, 0, i);
 				g.drawLine((int) d + w1, i, w1, i);
@@ -151,15 +122,15 @@ public class SimpleKaptcha extends HttpServlet implements Servlet
 		boolean borderGap = true;
 		int frames = 15;
 		int phase = 7;
-		for (int i = 0; i < w1; i++) {
-			double d =
-				(double) (period >> 1)
-					* Math.sin(
-						(double) i / (double) period
+		for (int i = 0; i < w1; i++)
+		{
+			double d = (double) (period >> 1)
+					* Math.sin((double) i / (double) period
 							+ (6.2831853071795862D * (double) phase)
-								/ (double) frames);
+							/ (double) frames);
 			g.copyArea(i, 0, 1, h1, 0, (int) d);
-			if (borderGap) {
+			if (borderGap)
+			{
 				g.setColor(color);
 				g.drawLine(i, (int) d, i, 0);
 				g.drawLine(i, (int) d + h1, i, h1);
@@ -167,7 +138,8 @@ public class SimpleKaptcha extends HttpServlet implements Servlet
 		}
 	}
 
-	private void drawThickLine(Graphics g, int x1, int y1, int x2, int y2, int thickness, Color c)
+	private void drawThickLine(Graphics g, int x1, int y1, int x2, int y2,
+			int thickness, Color c)
 	{
 		// The thick line is in fact a filled polygon
 		g.setColor(c);
@@ -178,7 +150,8 @@ public class SimpleKaptcha extends HttpServlet implements Servlet
 
 		double scale = (double) (thickness) / (2 * lineLength);
 
-		// The x and y increments from an endpoint needed to create a rectangle...
+		// The x and y increments from an endpoint needed to create a
+		// rectangle...
 		double ddx = -scale * (double) dY;
 		double ddy = scale * (double) dX;
 		ddx += (ddx > 0) ? 0.5 : -0.5;

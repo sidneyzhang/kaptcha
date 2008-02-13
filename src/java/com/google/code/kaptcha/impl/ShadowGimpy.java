@@ -20,59 +20,59 @@ import com.jhlabs.image.TransformFilter;
  */
 public class ShadowGimpy implements GimpyEngine, Configurable
 {
-    private ConfigManager configManager;
+	private ConfigManager configManager;
 
-    /**
-     * Applies distortion by adding shadow to the text and also two noises.
-     *
-     * @param baseImagethe
-     *            base image
-     * @return the distorted image
-     */
-    public BufferedImage getDistortedImage(BufferedImage baseImage)
-    {
-        NoiseProducer noiseProducer = configManager.getNoiseImpl();
-        BufferedImage distortedImage = new BufferedImage(baseImage.getWidth(),
-                baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+	/**
+	 * Applies distortion by adding shadow to the text and also two noises.
+	 * 
+	 * @param baseImagethe
+	 *            base image
+	 * @return the distorted image
+	 */
+	public BufferedImage getDistortedImage(BufferedImage baseImage)
+	{
+		NoiseProducer noiseProducer = configManager.getNoiseImpl();
+		BufferedImage distortedImage = new BufferedImage(baseImage.getWidth(),
+				baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        Graphics2D graph = (Graphics2D) distortedImage.getGraphics();
+		Graphics2D graph = (Graphics2D) distortedImage.getGraphics();
 
-        ShadowFilter shadowFilter = new ShadowFilter();
-        shadowFilter.setRadius(10);
+		ShadowFilter shadowFilter = new ShadowFilter();
+		shadowFilter.setRadius(10);
 
-        Random rand = new Random();
+		Random rand = new Random();
 
-        RippleFilter rippleFilter = new RippleFilter();
-        rippleFilter.setWaveType(RippleFilter.SINGLEFRAME);
-        rippleFilter.setXAmplitude(7.6f);
-        rippleFilter.setYAmplitude(rand.nextFloat() + 1.0f);
-        rippleFilter.setXWavelength(rand.nextInt(7) + 8);
-        rippleFilter.setYWavelength(rand.nextInt(3) + 2);
-        rippleFilter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
+		RippleFilter rippleFilter = new RippleFilter();
+		rippleFilter.setWaveType(RippleFilter.SINGLEFRAME);
+		rippleFilter.setXAmplitude(7.6f);
+		rippleFilter.setYAmplitude(rand.nextFloat() + 1.0f);
+		rippleFilter.setXWavelength(rand.nextInt(7) + 8);
+		rippleFilter.setYWavelength(rand.nextInt(3) + 2);
+		rippleFilter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
 
-        rippleFilter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
+		rippleFilter.setEdgeAction(TransformFilter.RANDOMPIXELORDER);
 
-        FilteredImageSource rippleFilteredImageSource = new FilteredImageSource(
-                baseImage.getSource(), rippleFilter);
-        Image effectImage = Toolkit.getDefaultToolkit().createImage(
-                rippleFilteredImageSource);
-        FilteredImageSource shadowFilteredImageSource = new FilteredImageSource(
-                effectImage.getSource(), shadowFilter);
-        effectImage = Toolkit.getDefaultToolkit().createImage(
-                shadowFilteredImageSource);
+		FilteredImageSource rippleFilteredImageSource = new FilteredImageSource(
+				baseImage.getSource(), rippleFilter);
+		Image effectImage = Toolkit.getDefaultToolkit().createImage(
+				rippleFilteredImageSource);
+		FilteredImageSource shadowFilteredImageSource = new FilteredImageSource(
+				effectImage.getSource(), shadowFilter);
+		effectImage = Toolkit.getDefaultToolkit().createImage(
+				shadowFilteredImageSource);
 
-        graph.drawImage(effectImage, 0, 0, null, null);
-        graph.dispose();
+		graph.drawImage(effectImage, 0, 0, null, null);
+		graph.dispose();
 
-        // draw lines over the image and/or text
-        noiseProducer.makeNoise(distortedImage, .1f, .1f, .25f, .25f);
-        noiseProducer.makeNoise(distortedImage, .1f, .25f, .5f, .9f);
+		// draw lines over the image and/or text
+		noiseProducer.makeNoise(distortedImage, .1f, .1f, .25f, .25f);
+		noiseProducer.makeNoise(distortedImage, .1f, .25f, .5f, .9f);
 
-        return distortedImage;
-    }
+		return distortedImage;
+	}
 
-    public void setConfigManager(ConfigManager configManager)
-    {
-        this.configManager = configManager;
-    }
+	public void setConfigManager(ConfigManager configManager)
+	{
+		this.configManager = configManager;
+	}
 }
