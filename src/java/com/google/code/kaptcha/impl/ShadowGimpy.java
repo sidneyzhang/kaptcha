@@ -7,10 +7,10 @@ import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.util.Random;
 
-import com.google.code.kaptcha.Configurable;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;
-import com.google.code.kaptcha.util.ConfigManager;
+import com.google.code.kaptcha.util.Config;
+import com.google.code.kaptcha.util.Configurable;
 import com.jhlabs.image.RippleFilter;
 import com.jhlabs.image.ShadowFilter;
 import com.jhlabs.image.TransformFilter;
@@ -18,9 +18,9 @@ import com.jhlabs.image.TransformFilter;
 /**
  * {@link ShadowGimpy} adds shadow to the text on the image and two noises.
  */
-public class ShadowGimpy implements GimpyEngine, Configurable
+public class ShadowGimpy extends Configurable implements GimpyEngine
 {
-	private ConfigManager configManager;
+	private Config config;
 
 	/**
 	 * Applies distortion by adding shadow to the text and also two noises.
@@ -31,7 +31,7 @@ public class ShadowGimpy implements GimpyEngine, Configurable
 	 */
 	public BufferedImage getDistortedImage(BufferedImage baseImage)
 	{
-		NoiseProducer noiseProducer = configManager.getNoiseImpl();
+		NoiseProducer noiseProducer = config.getNoiseImpl();
 		BufferedImage distortedImage = new BufferedImage(baseImage.getWidth(),
 				baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
@@ -71,8 +71,8 @@ public class ShadowGimpy implements GimpyEngine, Configurable
 		return distortedImage;
 	}
 
-	public void setConfigManager(ConfigManager configManager)
+	public void setConfig(Config config)
 	{
-		this.configManager = configManager;
+		this.config = config;
 	}
 }

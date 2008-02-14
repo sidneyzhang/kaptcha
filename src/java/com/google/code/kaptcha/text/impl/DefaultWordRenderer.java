@@ -9,18 +9,15 @@ import java.awt.font.GlyphVector;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import com.google.code.kaptcha.Configurable;
 import com.google.code.kaptcha.text.WordRenderer;
-import com.google.code.kaptcha.util.ConfigManager;
+import com.google.code.kaptcha.util.Configurable;
 
 /**
  * The default implementation of {@link WordRenderer}, creates an image with a
  * word rendered on it.
  */
-public class DefaultWordRenderer implements WordRenderer, Configurable
+public class DefaultWordRenderer extends Configurable implements WordRenderer
 {
-	private ConfigManager configManager;
-
 	private static final int START_POS_X = 25;
 
 	/**
@@ -36,9 +33,9 @@ public class DefaultWordRenderer implements WordRenderer, Configurable
 	 */
 	public BufferedImage renderWord(String word, int width, int height)
 	{
-		int fontSize = configManager.getTextProducerFontSize();
-		Font[] fonts = configManager.getTextProducerFonts(fontSize);
-		Color color = configManager.getTextProducerFontColor();
+		int fontSize = getConfig().getTextProducerFontSize();
+		Font[] fonts = getConfig().getTextProducerFonts(fontSize);
+		Color color = getConfig().getTextProducerFontColor();
 		BufferedImage image = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2D = image.createGraphics();
@@ -72,10 +69,5 @@ public class DefaultWordRenderer implements WordRenderer, Configurable
 		}
 
 		return image;
-	}
-
-	public void setConfigManager(ConfigManager configManager)
-	{
-		this.configManager = configManager;
 	}
 }

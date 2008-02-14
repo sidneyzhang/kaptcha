@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.lang.reflect.Field;
 
+
 /**
  * This class provides helper methods in parsing configuration values.
  */
 public class ConfigHelper
 {
+	/** */
 	public Color getColor(String paramName, String paramValue,
 			Color defaultColor)
 	{
@@ -28,6 +30,7 @@ public class ConfigHelper
 		return color;
 	}
 
+	/** */
 	public Color createColorFromCommaSeparatedValues(String paramName,
 			String paramValue)
 	{
@@ -68,6 +71,7 @@ public class ConfigHelper
 		return color;
 	}
 
+	/** */
 	public Color createColorFromFieldValue(String paramName, String paramValue)
 	{
 		Color color;
@@ -91,8 +95,9 @@ public class ConfigHelper
 		return color;
 	}
 
+	/** */
 	public Object getClassInstance(String paramName, String paramValue,
-			Object defaultInstance)
+			Object defaultInstance, Config config)
 	{
 		Object instance;
 		if ("".equals(paramValue) || paramValue == null)
@@ -119,9 +124,12 @@ public class ConfigHelper
 			}
 		}
 
+		setConfigurable(instance, config);
+
 		return instance;
 	}
 
+	/** */
 	public Font[] getFonts(String paramName, String paramValue, int fontSize,
 			Font[] defaultFonts)
 	{
@@ -142,6 +150,7 @@ public class ConfigHelper
 		return fonts;
 	}
 
+	/** */
 	public int getPositiveInt(String paramName, String paramValue,
 			int defaultInt)
 	{
@@ -169,6 +178,7 @@ public class ConfigHelper
 		return intValue;
 	}
 
+	/** */
 	public char[] getChars(String paramName, String paramValue,
 			char[] defaultChars)
 	{
@@ -184,6 +194,7 @@ public class ConfigHelper
 		return chars;
 	}
 
+	/** */
 	public boolean getBoolean(String paramName, String paramValue,
 			boolean defaultValue)
 	{
@@ -203,5 +214,14 @@ public class ConfigHelper
 					"Value must be either yes or no.");
 		}
 		return booleanValue;
+	}
+
+	/** */
+	private void setConfigurable(Object object, Config config)
+	{
+		if (object instanceof Configurable)
+		{
+			((Configurable) object).setConfig(config);
+		}
 	}
 }

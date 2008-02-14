@@ -6,10 +6,9 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 
-import com.google.code.kaptcha.Configurable;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;
-import com.google.code.kaptcha.util.ConfigManager;
+import com.google.code.kaptcha.util.Configurable;
 import com.jhlabs.image.RippleFilter;
 import com.jhlabs.image.TransformFilter;
 import com.jhlabs.image.WaterFilter;
@@ -17,10 +16,8 @@ import com.jhlabs.image.WaterFilter;
 /**
  * {@link WaterRipple} adds water ripple effect to an image.
  */
-public class WaterRipple implements GimpyEngine, Configurable
+public class WaterRipple extends Configurable implements GimpyEngine
 {
-	private ConfigManager configManager;
-
 	/**
 	 * Applies distortion by adding water ripple effect.
 	 * 
@@ -30,7 +27,7 @@ public class WaterRipple implements GimpyEngine, Configurable
 	 */
 	public BufferedImage getDistortedImage(BufferedImage baseImage)
 	{
-		NoiseProducer noiseProducer = configManager.getNoiseImpl();
+		NoiseProducer noiseProducer = getConfig().getNoiseImpl();
 		BufferedImage distortedImage = new BufferedImage(baseImage.getWidth(),
 				baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
@@ -66,10 +63,5 @@ public class WaterRipple implements GimpyEngine, Configurable
 		noiseProducer.makeNoise(distortedImage, .1f, .1f, .25f, .25f);
 		noiseProducer.makeNoise(distortedImage, .1f, .25f, .5f, .9f);
 		return distortedImage;
-	}
-
-	public void setConfigManager(ConfigManager configManager)
-	{
-		this.configManager = configManager;
 	}
 }

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import com.google.code.kaptcha.util.ConfigManager;
+import com.google.code.kaptcha.util.Config;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
@@ -34,7 +34,6 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
-
 		resp.setHeader("Pragma", "no-cache");
 		resp.setHeader("Cache-Control", "no-cache, no-store");
 		resp.setDateHeader("Expires", 0);
@@ -75,7 +74,7 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 			props.put(key, value);
 		}
 
-		ConfigManager configManager = new ConfigManager(props);
-		this.captchaProducer = (Producer) configManager.getProducerImpl();
+		Config config = new Config(props);
+		this.captchaProducer = (Producer) config.getProducerImpl();
 	}
 }

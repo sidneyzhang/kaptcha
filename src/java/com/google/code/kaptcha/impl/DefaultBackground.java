@@ -8,26 +8,23 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import com.google.code.kaptcha.BackgroundProducer;
-import com.google.code.kaptcha.Configurable;
-import com.google.code.kaptcha.util.ConfigManager;
+import com.google.code.kaptcha.util.Configurable;
 
 /**
  * Default implementation of {@link BackgroundProducer}, adds a gradient
  * background to an image. The gradient color is diagonal and made of Color From
  * (top left) and Color To (bottom right).
  */
-public class DefaultBackground implements BackgroundProducer, Configurable
+public class DefaultBackground extends Configurable implements BackgroundProducer
 {
-	private ConfigManager configManager;
-
 	/**
 	 * @baseImage the base image
 	 * @return an image with a gradient background added to the base image.
 	 */
 	public BufferedImage addBackground(BufferedImage baseImage)
 	{
-		Color colorFrom = configManager.getBackgroundColorFrom();
-		Color colorTo = configManager.getBackgroundColorTo();
+		Color colorFrom = getConfig().getBackgroundColorFrom();
+		Color colorTo = getConfig().getBackgroundColorTo();
 
 		int width = baseImage.getWidth();
 		int height = baseImage.getHeight();
@@ -60,10 +57,5 @@ public class DefaultBackground implements BackgroundProducer, Configurable
 		graph.drawImage(baseImage, 0, 0, null);
 
 		return imageWithBackground;
-	}
-
-	public void setConfigManager(ConfigManager configManager)
-	{
-		this.configManager = configManager;
 	}
 }

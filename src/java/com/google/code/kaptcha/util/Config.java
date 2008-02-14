@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.util.Properties;
 
 import com.google.code.kaptcha.BackgroundProducer;
-import com.google.code.kaptcha.Configurable;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;
@@ -20,16 +19,16 @@ import com.google.code.kaptcha.text.impl.DefaultTextCreator;
 import com.google.code.kaptcha.text.impl.DefaultWordRenderer;
 
 /**
- * {@link ConfigManager} retrieves configuration values from properties file and
+ * {@link Config} retrieves configuration values from properties file and
  * specifies default values when no value is specified.
  */
-public class ConfigManager
+public class Config
 {
 	private Properties properties;
 
 	private ConfigHelper helper;
 
-	public ConfigManager(Properties properties)
+	public Config(Properties properties)
 	{
 		this.properties = properties;
 		helper = new ConfigHelper();
@@ -60,11 +59,8 @@ public class ConfigManager
 	{
 		String paramName = Constants.KAPTCHA_PRODUCER_IMPL;
 		String paramValue = properties.getProperty(paramName);
-		DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
-		setConfigurable(defaultKaptcha);
 		Producer producer = (Producer) helper.getClassInstance(paramName,
-				paramValue, defaultKaptcha);
-		setConfigurable(producer);
+				paramValue, new DefaultKaptcha(), this);
 		return producer;
 	}
 
@@ -72,11 +68,8 @@ public class ConfigManager
 	{
 		String paramName = Constants.KAPTCHA_TEXTPRODUCER_IMPL;
 		String paramValue = properties.getProperty(paramName);
-		DefaultTextCreator defaultTextCreator = new DefaultTextCreator();
-		setConfigurable(defaultTextCreator);
 		TextProducer textProducer = (TextProducer) helper.getClassInstance(
-				paramName, paramValue, defaultTextCreator);
-		setConfigurable(textProducer);
+				paramName, paramValue, new DefaultTextCreator(), this);
 		return textProducer;
 	}
 
@@ -123,11 +116,8 @@ public class ConfigManager
 	{
 		String paramName = Constants.KAPTCHA_NOISE_IMPL;
 		String paramValue = properties.getProperty(paramName);
-		DefaultNoise defaultNoise = new DefaultNoise();
-		setConfigurable(defaultNoise);
 		NoiseProducer noiseProducer = (NoiseProducer) helper.getClassInstance(
-				paramName, paramValue, defaultNoise);
-		setConfigurable(noiseProducer);
+				paramName, paramValue, new DefaultNoise(), this);
 		return noiseProducer;
 	}
 
@@ -142,11 +132,8 @@ public class ConfigManager
 	{
 		String paramName = Constants.KAPTCHA_OBSCURIFICATOR_IMPL;
 		String paramValue = properties.getProperty(paramName);
-		WaterRipple defaultObscurificator = new WaterRipple();
-		setConfigurable(defaultObscurificator);
 		GimpyEngine gimpyEngine = (GimpyEngine) helper.getClassInstance(
-				paramName, paramValue, defaultObscurificator);
-		setConfigurable(gimpyEngine);
+				paramName, paramValue, new WaterRipple(), this);
 		return gimpyEngine;
 	}
 
@@ -154,11 +141,8 @@ public class ConfigManager
 	{
 		String paramName = Constants.KAPTCHA_WORDRENDERER_IMPL;
 		String paramValue = properties.getProperty(paramName);
-		DefaultWordRenderer defaultWordRenderer = new DefaultWordRenderer();
-		setConfigurable(defaultWordRenderer);
 		WordRenderer wordRenderer = (WordRenderer) helper.getClassInstance(
-				paramName, paramValue, defaultWordRenderer);
-		setConfigurable(wordRenderer);
+				paramName, paramValue, new DefaultWordRenderer(), this);
 		return wordRenderer;
 	}
 
@@ -166,11 +150,8 @@ public class ConfigManager
 	{
 		String paramName = Constants.KAPTCHA_BACKGROUND_IMPL;
 		String paramValue = properties.getProperty(paramName);
-		DefaultBackground defaultBackground = new DefaultBackground();
-		setConfigurable(defaultBackground);
 		BackgroundProducer backgroundProducer = (BackgroundProducer) helper
-				.getClassInstance(paramName, paramValue, defaultBackground);
-		setConfigurable(backgroundProducer);
+				.getClassInstance(paramName, paramValue, new DefaultBackground(), this);
 		return backgroundProducer;
 	}
 
@@ -186,14 +167,6 @@ public class ConfigManager
 		String paramName = Constants.KAPTCHA_BACKGROUND_CLR_TO;
 		String paramValue = properties.getProperty(paramName);
 		return helper.getColor(paramName, paramValue, Color.WHITE);
-	}
-
-	private void setConfigurable(Object object)
-	{
-		if (object instanceof Configurable)
-		{
-			((Configurable) object).setConfigManager(this);
-		}
 	}
 
 	public Properties getProperties()

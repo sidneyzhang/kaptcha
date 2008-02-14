@@ -2,25 +2,22 @@ package com.google.code.kaptcha.text.impl;
 
 import java.util.Random;
 
-import com.google.code.kaptcha.Configurable;
 import com.google.code.kaptcha.text.TextProducer;
-import com.google.code.kaptcha.util.ConfigManager;
+import com.google.code.kaptcha.util.Configurable;
 
 /**
  * {@link DefaultTextCreator} creates random text from an array of characters
  * with specified length.
  */
-public class DefaultTextCreator implements TextProducer, Configurable
+public class DefaultTextCreator extends Configurable implements TextProducer
 {
-	private ConfigManager configManager;
-
 	/**
 	 * @return the random text
 	 */
 	public String getText()
 	{
-		int length = configManager.getTextProducerCharLength();
-		char[] chars = configManager.getTextProducerCharString();
+		int length = getConfig().getTextProducerCharLength();
+		char[] chars = getConfig().getTextProducerCharString();
 		int randomContext = chars.length - 1;
 		Random rand = new Random();
 		StringBuffer text = new StringBuffer();
@@ -30,10 +27,5 @@ public class DefaultTextCreator implements TextProducer, Configurable
 		}
 
 		return text.toString();
-	}
-
-	public void setConfigManager(ConfigManager configManager)
-	{
-		this.configManager = configManager;
 	}
 }

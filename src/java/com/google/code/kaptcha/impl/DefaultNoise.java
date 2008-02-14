@@ -10,18 +10,15 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import com.google.code.kaptcha.Configurable;
 import com.google.code.kaptcha.NoiseProducer;
-import com.google.code.kaptcha.util.ConfigManager;
+import com.google.code.kaptcha.util.Configurable;
 
 /**
  * The default implementation of {@link NoiseProducer}, adds a noise on an
  * image.
  */
-public class DefaultNoise implements NoiseProducer, Configurable
+public class DefaultNoise extends Configurable implements NoiseProducer
 {
-	private ConfigManager configManager;
-
 	/**
 	 * Draws a noise on the image. The noise curve depends on the factor values.
 	 * Noise won't be visible if all factors have the value > 1.0f
@@ -36,7 +33,7 @@ public class DefaultNoise implements NoiseProducer, Configurable
 	public void makeNoise(BufferedImage image, float factorOne,
 			float factorTwo, float factorThree, float factorFour)
 	{
-		Color color = configManager.getNoiseColor();
+		Color color = getConfig().getNoiseColor();
 
 		// image size
 		int width = image.getWidth();
@@ -92,10 +89,5 @@ public class DefaultNoise implements NoiseProducer, Configurable
 		}
 
 		graph.dispose();
-	}
-
-	public void setConfigManager(ConfigManager configManager)
-	{
-		this.configManager = configManager;
 	}
 }

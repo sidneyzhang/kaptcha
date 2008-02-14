@@ -11,17 +11,15 @@ import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.text.TextProducer;
 import com.google.code.kaptcha.text.WordRenderer;
-import com.google.code.kaptcha.util.ConfigManager;
+import com.google.code.kaptcha.util.Configurable;
 
 /**
  * Default {@link Producer} implementation which draws a captcha image using
  * {@link WordRenderer}, {@link GimpyEngine}, {@link BackgroundProducer}.
  * Text creation uses {@link TextProducer}.
  */
-public class DefaultKaptcha implements Producer
+public class DefaultKaptcha extends Configurable implements Producer
 {
-	private ConfigManager configManager;
-
 	private static final int WIDTH = 200;
 
 	private static final int HEIGHT = 50;
@@ -35,11 +33,10 @@ public class DefaultKaptcha implements Producer
 	 */
 	public BufferedImage createImage(String text)
 	{
-		WordRenderer wordRenderer = configManager.getWordRendererImpl();
-		GimpyEngine gimpyEngine = configManager.getObscurificatorImpl();
-		BackgroundProducer backgroundProducer = configManager
-				.getBackgroundImpl();
-		boolean isBorderDrawn = configManager.isBorderDrawn();
+		WordRenderer wordRenderer = getConfig().getWordRendererImpl();
+		GimpyEngine gimpyEngine = getConfig().getObscurificatorImpl();
+		BackgroundProducer backgroundProducer = getConfig().getBackgroundImpl();
+		boolean isBorderDrawn = getConfig().isBorderDrawn();
 
 		BufferedImage bi = wordRenderer.renderWord(text, WIDTH, HEIGHT);
 		bi = gimpyEngine.getDistortedImage(bi);
@@ -54,8 +51,8 @@ public class DefaultKaptcha implements Producer
 
 	private void drawBox(Graphics2D graphics)
 	{
-		Color borderColor = configManager.getBorderColor();
-		int borderThickness = configManager.getBorderThickness();
+		Color borderColor = getConfig().getBorderColor();
+		int borderThickness = getConfig().getBorderThickness();
 
 		graphics.setColor(borderColor);
 
@@ -80,11 +77,6 @@ public class DefaultKaptcha implements Producer
 	 */
 	public String createText()
 	{
-		return configManager.getTextProducerImpl().getText();
-	}
-
-	public void setConfigManager(ConfigManager configManager)
-	{
-		this.configManager = configManager;
+		return getConfig().getTextProducerImpl().getText();
 	}
 }
