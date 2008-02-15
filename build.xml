@@ -18,7 +18,7 @@
 	<property name="ant.build.javac.target" value="1.5" />
 	<property name="ant.build.javac.source" value="1.5" />
 
-	<property name="retroweaver.version" value="2.0.3" />
+	<property name="retroweaver.version" value="2.0.4" />
 	<property name="retroweaver.home" value="../retroweaver-${retroweaver.version}" />
 
 	<tstamp/>
