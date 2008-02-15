@@ -97,7 +97,7 @@
 		</copy>
 
 		<copy file="${build.dir}/${name}-${version}.jar" todir="${build.dir}/${dist.name}/" />
-		<copy file="${build.dir}/${name}-${version}.war" todir="${build.dir}/${dist.name}/" />
+		<copy file="${build.dir}/${name}.war" todir="${build.dir}/${dist.name}/" />
 		
 		<retroweaver inputjar="${build.dir}/${name}-${version}.jar" 
 					outputjar="${build.dir}/${dist.name}/${name}-${version}-jdk14.jar" />

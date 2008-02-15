@@ -15,8 +15,7 @@ public class FishEyeGimpy implements GimpyEngine
 	 * Applies distortion by adding fish eye effect and horizontal vertical
 	 * lines.
 	 * 
-	 * @param baseImagethe
-	 *            base image
+	 * @param baseImage the base image
 	 * @return the distorted image
 	 */
 	public BufferedImage getDistortedImage(BufferedImage baseImage)

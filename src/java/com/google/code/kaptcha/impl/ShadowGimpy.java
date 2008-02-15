@@ -25,8 +25,7 @@ public class ShadowGimpy extends Configurable implements GimpyEngine
 	/**
 	 * Applies distortion by adding shadow to the text and also two noises.
 	 * 
-	 * @param baseImagethe
-	 *            base image
+	 * @param baseImage the base image
 	 * @return the distorted image
 	 */
 	public BufferedImage getDistortedImage(BufferedImage baseImage)

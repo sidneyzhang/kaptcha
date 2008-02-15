@@ -18,7 +18,7 @@ import com.google.code.kaptcha.util.Configurable;
 public class DefaultBackground extends Configurable implements BackgroundProducer
 {
 	/**
-	 * @baseImage the base image
+	 * @param baseImage the base image
 	 * @return an image with a gradient background added to the base image.
 	 */
 	public BufferedImage addBackground(BufferedImage baseImage)

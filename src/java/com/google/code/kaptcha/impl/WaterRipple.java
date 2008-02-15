@@ -21,8 +21,7 @@ public class WaterRipple extends Configurable implements GimpyEngine
 	/**
 	 * Applies distortion by adding water ripple effect.
 	 * 
-	 * @param baseImagethe
-	 *            base image
+	 * @param baseImage the base image
 	 * @return the distorted image
 	 */
 	public BufferedImage getDistortedImage(BufferedImage baseImage)
