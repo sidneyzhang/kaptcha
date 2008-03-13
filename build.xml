@@ -35,6 +35,17 @@
 		</fileset>
 	</path>
 
+	<path id="test.classpath">
+		<path refid="classpath" />
+
+		<fileset dir="${lib.dir}">
+			<include name="${junit.jar}"/>
+		</fileset>
+
+		<pathelement location="${build.dir}/classes" />
+		<pathelement location="${build.dir}/test/classes" />
+	</path>
+
 	<!-- ******************************************************** -->
 
 	<target name="jar" depends="init">
@@ -154,4 +165,37 @@
 		  </classpath>
 		</taskdef>
 	</target>
+
+	<target name="junit-compile" depends="jar">
+		<mkdir dir="${build.dir}/test/classes"/>
+
+		<javac 
+			srcdir="${base.dir}/test/java"
+			destdir="${build.dir}/test/classes" 
+			includeAntRuntime="false"
+			debug="${build.debug}" 
+			deprecation="${build.deprecation}"
+			target="${ant.build.javac.target}"
+			source="${ant.build.javac.source}">
+
+			<classpath refid="test.classpath"/>
+		</javac>
+	</target>
+
+	<target name="junit" depends="junit-compile">
+		<junit printsummary="yes" showoutput="yes" fork="yes">
+			<jvmarg value="-Dlog4j.configuration=file:${base.dir}/test/log4j.properties"/>
+
+			<classpath refid="test.classpath"/>
+			
+			<formatter type="plain" />
+
+			<batchtest todir="${build.dir}/test/">
+				<fileset dir="${build.dir}/test/classes">
+					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
 </project>
