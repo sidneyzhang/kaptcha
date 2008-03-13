@@ -9,7 +9,6 @@ import java.util.Random;
 
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;
-import com.google.code.kaptcha.util.Config;
 import com.google.code.kaptcha.util.Configurable;
 import com.jhlabs.image.RippleFilter;
 import com.jhlabs.image.ShadowFilter;
@@ -20,17 +19,15 @@ import com.jhlabs.image.TransformFilter;
  */
 public class ShadowGimpy extends Configurable implements GimpyEngine
 {
-	private Config config;
-
 	/**
 	 * Applies distortion by adding shadow to the text and also two noises.
-	 * 
+	 *
 	 * @param baseImage the base image
 	 * @return the distorted image
 	 */
 	public BufferedImage getDistortedImage(BufferedImage baseImage)
 	{
-		NoiseProducer noiseProducer = config.getNoiseImpl();
+		NoiseProducer noiseProducer = getConfig().getNoiseImpl();
 		BufferedImage distortedImage = new BufferedImage(baseImage.getWidth(),
 				baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
@@ -68,10 +65,5 @@ public class ShadowGimpy extends Configurable implements GimpyEngine
 		noiseProducer.makeNoise(distortedImage, .1f, .25f, .5f, .9f);
 
 		return distortedImage;
-	}
-
-	public void setConfig(Config config)
-	{
-		this.config = config;
 	}
 }
