@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import javax.imageio.ImageIO;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,14 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.util.Config;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
  * This servlet uses the settings passed into it via the Producer api.
- * 
+ *
  * @author testvoogd@hotmail.com
+ * @author jon
+ * @author cliffano
  */
 @SuppressWarnings("serial")
 public class KaptchaServlet extends HttpServlet implements Servlet
@@ -31,40 +32,17 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 
 	private Producer captchaProducer = null;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException
-	{
-		resp.setHeader("Pragma", "no-cache");
-		resp.setHeader("Cache-Control", "no-cache, no-store");
-		resp.setDateHeader("Expires", 0);
-		resp.setContentType("image/jpeg");
-
-		// this key can be read from any controller to check whether user
-		// is a computer or human..
-		String capText = captchaProducer.createText();
-		req.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
-
-		// notice we don't store the captext in the producer. This is because
-		// the thing is not thread safe and we do use the producer as an
-		// instance
-		// variable in the servlet.
-		BufferedImage bi = captchaProducer.createImage(capText);
-
-		JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(resp
-				.getOutputStream());
-		JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bi);
-		param.setQuality(1f, true);
-		encoder.encode(bi, param);
-	}
-
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
 	 */
 	public void init(ServletConfig conf) throws ServletException
 	{
 		super.init(conf);
+
+		// Switch off disk based caching.
+		ImageIO.setUseCache(false);
 
 		Enumeration<?> initParams = conf.getInitParameterNames();
 		while (initParams.hasMoreElements())
@@ -76,5 +54,44 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 
 		Config config = new Config(props);
 		this.captchaProducer = (Producer) config.getProducerImpl();
+	}
+
+	/** */
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException
+	{
+		// Set to expire far in the past.
+		resp.setDateHeader("Expires", 0);
+		// Set standard HTTP/1.1 no-cache headers.
+		resp.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		// Set IE extended HTTP/1.1 no-cache headers (use addHeader).
+		resp.addHeader("Cache-Control", "post-check=0, pre-check=0");
+		// Set standard HTTP/1.0 no-cache header.
+		resp.setHeader("Pragma", "no-cache");
+		  
+		// return a jpeg
+		resp.setContentType("image/jpeg");
+
+		// create the text for the image
+		String capText = captchaProducer.createText();
+		
+		// store the text in the session
+		req.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
+
+		// create the image with the text
+		BufferedImage bi = captchaProducer.createImage(capText);
+
+		ServletOutputStream out = resp.getOutputStream();
+		
+		// write the data out
+		ImageIO.write(bi, "jpg", out);
+		try
+		{
+			out.flush();
+		}
+		finally
+		{
+			out.close();
+		}
 	}
 }
