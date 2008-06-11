@@ -1,7 +1,7 @@
 <project name="kaptcha" default="war" basedir=".">
 
 	<property name="name" value="${ant.project.name}" />
-	
+
 	<property file="user.properties" />
 	<property file="${user.home}/build.properties" />
 	<property file="build.properties" />
@@ -11,7 +11,7 @@
 	<property name="lib.dir" location="./lib" />
 
 	<property name="build.dir" location="target" />
-	
+
 	<property name="build.debug" value="on" />
 	<property name="build.deprecation" value="on" />
 
@@ -31,7 +31,7 @@
 	<path id="classpath">
 		<fileset dir="${lib.dir}">
 			<include name="${servlet.jar}" />
-			<include name="${imaging.jar}" />
+			<include name="${pixels.jar}" />
 		</fileset>
 	</path>
 
@@ -51,9 +51,9 @@
 	<target name="jar" depends="init">
 		<mkdir dir="${build.dir}/classes" />
 
-		<unjar src="${lib.dir}/${imaging.jar}" dest="${build.dir}/imaging"/>
+		<unjar src="${lib.dir}/${pixels.jar}" dest="${build.dir}/pixels"/>
 		<copy todir="${build.dir}/classes">
-			<fileset dir="${build.dir}/imaging">
+			<fileset dir="${build.dir}/pixels">
 				<include name="**/*.class" />
 			</fileset>
 		</copy>
@@ -79,7 +79,7 @@
 	</target>
 
 	<target name="war" depends="jar">
-		<war destfile="${build.dir}/${name}.war" 
+		<war destfile="${build.dir}/${name}.war"
 			webxml="${base.dir}/src/resources/web.xml">
 
 			<fileset dir="${base.dir}/doc/">
@@ -115,8 +115,8 @@
 
 		<copy file="${build.dir}/${name}-${version}.jar" todir="${build.dir}/${dist.name}/" />
 		<copy file="${build.dir}/${name}.war" todir="${build.dir}/${dist.name}/" />
-		
-		<retroweaver inputjar="${build.dir}/${name}-${version}.jar" 
+
+		<retroweaver inputjar="${build.dir}/${name}-${version}.jar"
 					outputjar="${build.dir}/${dist.name}/${name}-${version}-jdk14.jar" />
 
 		<zip zipfile="${build.dir}/${dist.name}.zip" basedir="${build.dir}/${dist.name}" />
@@ -125,7 +125,7 @@
 	<target name="javadoc" depends="init">
 		<property name="javadoc.dir" location="${build.dir}/javadoc" />
 		<mkdir dir="${javadoc.dir}"/>
-		
+
 		<javadoc
 			destdir="${javadoc.dir}"
 			packagenames="*"
@@ -175,11 +175,11 @@
 	<target name="junit-compile" depends="jar">
 		<mkdir dir="${build.dir}/test/classes"/>
 
-		<javac 
+		<javac
 			srcdir="${base.dir}/test/java"
-			destdir="${build.dir}/test/classes" 
+			destdir="${build.dir}/test/classes"
 			includeAntRuntime="false"
-			debug="${build.debug}" 
+			debug="${build.debug}"
 			deprecation="${build.deprecation}"
 			target="${ant.build.javac.target}"
 			source="${ant.build.javac.source}">
@@ -193,7 +193,7 @@
 			<jvmarg value="-Dlog4j.configuration=file:${base.dir}/test/log4j.properties"/>
 
 			<classpath refid="test.classpath"/>
-			
+
 			<formatter type="plain" />
 
 			<batchtest todir="${build.dir}/test/">

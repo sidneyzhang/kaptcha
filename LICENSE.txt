@@ -1,9 +1,9 @@
 kaptcha - A kaptcha generation engine.
-Copyright (C) 2007 http://code.google.com/p/kaptcha/
+Copyright (C) 2008 http://code.google.com/p/kaptcha/
 
 Original Copyright (C) 2005 keesjanvoogd at users.sourceforge.net
 
-Most of the distortion algorithms they come from: http://www.jhlabs.com/
+The Pixels library from: https://pixels.dev.java.net/
 
 The original codebase did not have a license. This codebase is being licensed
 under the quite liberal Apache License v2.0.
