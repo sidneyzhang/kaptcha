@@ -20,9 +20,9 @@ import com.google.code.kaptcha.util.Configurable;
  */
 public class DefaultKaptcha extends Configurable implements Producer
 {
-	private static final int WIDTH = 200;
+	private int width = 200;
 
-	private static final int HEIGHT = 50;
+	private int height = 50;
 
 	/**
 	 * Create an image which will have written a distorted text.
@@ -37,8 +37,10 @@ public class DefaultKaptcha extends Configurable implements Producer
 		GimpyEngine gimpyEngine = getConfig().getObscurificatorImpl();
 		BackgroundProducer backgroundProducer = getConfig().getBackgroundImpl();
 		boolean isBorderDrawn = getConfig().isBorderDrawn();
+		this.width = getConfig().getWidth();
+		this.height = getConfig().getHeight();
 
-		BufferedImage bi = wordRenderer.renderWord(text, WIDTH, HEIGHT);
+		BufferedImage bi = wordRenderer.renderWord(text, width, height);
 		bi = gimpyEngine.getDistortedImage(bi);
 		bi = backgroundProducer.addBackground(bi);
 		Graphics2D graphics = bi.createGraphics();
@@ -62,13 +64,13 @@ public class DefaultKaptcha extends Configurable implements Producer
 			graphics.setStroke(stroke);
 		}
 
-		Line2D line1 = new Line2D.Double(0, 0, 0, WIDTH);
+		Line2D line1 = new Line2D.Double(0, 0, 0, width);
 		graphics.draw(line1);
-		Line2D line2 = new Line2D.Double(0, 0, WIDTH, 0);
+		Line2D line2 = new Line2D.Double(0, 0, width, 0);
 		graphics.draw(line2);
-		line2 = new Line2D.Double(0, HEIGHT - 1, WIDTH, HEIGHT - 1);
+		line2 = new Line2D.Double(0, height - 1, width, height - 1);
 		graphics.draw(line2);
-		line2 = new Line2D.Double(WIDTH - 1, HEIGHT - 1, WIDTH - 1, 0);
+		line2 = new Line2D.Double(width - 1, height - 1, width - 1, 0);
 		graphics.draw(line2);
 	}
 

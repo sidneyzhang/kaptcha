@@ -4,6 +4,8 @@ public class Constants
 {
 	public final static String KAPTCHA_SESSION_KEY = "KAPTCHA_SESSION_KEY";
 
+	public final static String KAPTCHA_SESSION_CONFIG_KEY = "kaptcha.session.key";
+
 	public final static String KAPTCHA_BORDER = "kaptcha.border";
 
 	public final static String KAPTCHA_BORDER_COLOR = "kaptcha.border.color";
@@ -37,4 +39,8 @@ public class Constants
 	public static final String KAPTCHA_BACKGROUND_CLR_FROM = "kaptcha.background.clear.from";
 
 	public static final String KAPTCHA_BACKGROUND_CLR_TO = "kaptcha.background.clear.to";
+
+	public static final String KAPTCHA_IMAGE_WIDTH = "kaptcha.image.width";
+	
+	public static final String KAPTCHA_IMAGE_HEIGHT = "kaptcha.image.height";
 }

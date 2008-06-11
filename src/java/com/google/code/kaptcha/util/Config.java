@@ -169,6 +169,29 @@ public class Config
 		return helper.getColor(paramName, paramValue, Color.WHITE);
 	}
 
+	public int getWidth()
+	{
+		String paramName = Constants.KAPTCHA_IMAGE_WIDTH;
+		String paramValue = properties.getProperty(paramName);
+		return helper.getPositiveInt(paramName, paramValue, 200);
+	}
+
+	public int getHeight()
+	{
+		String paramName = Constants.KAPTCHA_IMAGE_HEIGHT;
+		String paramValue = properties.getProperty(paramName);
+		return helper.getPositiveInt(paramName, paramValue, 50);
+	}
+
+	/**
+	 * Allows one to override the key name which is stored in the 
+	 * users HttpSession. Defaults to Constants.KAPTCHA_SESSION_KEY.
+	 */
+	public String getSessionKey()
+	{
+		return properties.getProperty(Constants.KAPTCHA_SESSION_CONFIG_KEY, Constants.KAPTCHA_SESSION_KEY);
+	}
+
 	public Properties getProperties()
 	{
 		return properties;

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.util.Config;
 
@@ -30,7 +29,9 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 {
 	private Properties props = new Properties();
 
-	private Producer captchaProducer = null;
+	private Producer kaptchaProducer = null;
+	
+	private String sessionKeyValue = null;
 
 	/*
 	 * (non-Javadoc)
@@ -53,7 +54,8 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 		}
 
 		Config config = new Config(props);
-		this.captchaProducer = (Producer) config.getProducerImpl();
+		this.kaptchaProducer = (Producer) config.getProducerImpl();
+		this.sessionKeyValue = config.getSessionKey();
 	}
 
 	/** */
@@ -73,13 +75,13 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 		resp.setContentType("image/jpeg");
 
 		// create the text for the image
-		String capText = captchaProducer.createText();
+		String capText = kaptchaProducer.createText();
 		
 		// store the text in the session
-		req.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
+		req.getSession().setAttribute(this.sessionKeyValue, capText);
 
 		// create the image with the text
-		BufferedImage bi = captchaProducer.createImage(capText);
+		BufferedImage bi = kaptchaProducer.createImage(capText);
 
 		ServletOutputStream out = resp.getOutputStream();
 		

@@ -18,8 +18,6 @@ import com.google.code.kaptcha.util.Configurable;
  */
 public class DefaultWordRenderer extends Configurable implements WordRenderer
 {
-	private static final int START_POS_X = 25;
-
 	/**
 	 * Renders a word to an image.
 	 * 
@@ -50,7 +48,9 @@ public class DefaultWordRenderer extends Configurable implements WordRenderer
 
 		FontRenderContext frc = g2D.getFontRenderContext();
 		Random random = new Random();
-		int startPosX = START_POS_X;
+
+		int startPosX = width / (2 + word.length());
+		int startPosY = (height - fontSize) / 5 + fontSize;
 
 		char[] wordChars = word.toCharArray();
 		for (int i = 0; i < wordChars.length; i++)
@@ -64,7 +64,7 @@ public class DefaultWordRenderer extends Configurable implements WordRenderer
 			GlyphVector gv = chosenFont.createGlyphVector(frc, charToDraw);
 			double charWidth = gv.getVisualBounds().getWidth();
 
-			g2D.drawChars(charToDraw, 0, charToDraw.length, startPosX, 35);
+			g2D.drawChars(charToDraw, 0, charToDraw.length, startPosX, startPosY);
 			startPosX = startPosX + (int) charWidth + 2;
 		}
 
