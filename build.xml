@@ -107,6 +107,12 @@
 			</fileset>
 		</copy>
 
+		<copy todir="${build.dir}/${dist.name}/">
+			<fileset dir=".">
+				<include name="src/**" />
+			</fileset>
+		</copy>
+
 		<copy file="${build.dir}/${name}-${version}.jar" todir="${build.dir}/${dist.name}/" />
 		<copy file="${build.dir}/${name}.war" todir="${build.dir}/${dist.name}/" />
 		
