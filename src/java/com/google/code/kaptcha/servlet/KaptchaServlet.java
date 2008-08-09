@@ -2,6 +2,7 @@ package com.google.code.kaptcha.servlet;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -30,14 +31,17 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 	private Properties props = new Properties();
 
 	private Producer kaptchaProducer = null;
-	
+
 	private String sessionKeyValue = null;
+
+	private String sessionKeyDateValue = null;
 
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
 	 */
+	@Override
 	public void init(ServletConfig conf) throws ServletException
 	{
 		super.init(conf);
@@ -50,15 +54,17 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 		{
 			String key = (String) initParams.nextElement();
 			String value = conf.getInitParameter(key);
-			props.put(key, value);
+			this.props.put(key, value);
 		}
 
-		Config config = new Config(props);
-		this.kaptchaProducer = (Producer) config.getProducerImpl();
+		Config config = new Config(this.props);
+		this.kaptchaProducer = config.getProducerImpl();
 		this.sessionKeyValue = config.getSessionKey();
+		this.sessionKeyDateValue = config.getSessionDate();
 	}
 
 	/** */
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
@@ -70,21 +76,26 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 		resp.addHeader("Cache-Control", "post-check=0, pre-check=0");
 		// Set standard HTTP/1.0 no-cache header.
 		resp.setHeader("Pragma", "no-cache");
-		  
+
 		// return a jpeg
 		resp.setContentType("image/jpeg");
 
 		// create the text for the image
-		String capText = kaptchaProducer.createText();
-		
+		String capText = this.kaptchaProducer.createText();
+
 		// store the text in the session
 		req.getSession().setAttribute(this.sessionKeyValue, capText);
 
+		// store the date in the session so that it can be compared
+		// against to make sure someone hasn't taken too long to enter
+		// their kaptcha
+		req.getSession().setAttribute(this.sessionKeyDateValue, new Date());
+
 		// create the image with the text
-		BufferedImage bi = kaptchaProducer.createImage(capText);
+		BufferedImage bi = this.kaptchaProducer.createImage(capText);
 
 		ServletOutputStream out = resp.getOutputStream();
-		
+
 		// write the data out
 		ImageIO.write(bi, "jpg", out);
 		try
