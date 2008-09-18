@@ -6,11 +6,6 @@
 	version="2.4">
 
 	<servlet>
-		<servlet-name>SimpleKaptcha</servlet-name>
-		<servlet-class>com.google.code.kaptcha.servlet.SimpleKaptcha</servlet-class>
-	</servlet>
-	
-	<servlet>
 		<servlet-name>Kaptcha</servlet-name>
 		<servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
 
@@ -28,11 +23,6 @@
 			<param-value>green</param-value>
 		</init-param>
 	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>SimpleKaptcha</servlet-name>
-		<url-pattern>/SimpleKaptcha.jpg</url-pattern>
-	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>Kaptcha</servlet-name>
