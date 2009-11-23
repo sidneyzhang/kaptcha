@@ -98,13 +98,5 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 
 		// write the data out
 		ImageIO.write(bi, "jpg", out);
-		try
-		{
-			out.flush();
-		}
-		finally
-		{
-			out.close();
-		}
 	}
 }
