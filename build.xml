@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+
 <project name="kaptcha" default="war" basedir=".">
 
 	<property name="name" value="${ant.project.name}" />
@@ -65,7 +67,8 @@
 			debug="${build.debug}"
 			deprecation="${build.deprecation}"
 			target="${ant.build.javac.target}"
-			source="${ant.build.javac.source}">
+			source="${ant.build.javac.source}"
+			encoding="UTF-8">
 
 			<classpath refid="classpath" />
 		</javac>
