@@ -50,23 +50,37 @@ public class DefaultWordRenderer extends Configurable implements WordRenderer
 		FontRenderContext frc = g2D.getFontRenderContext();
 		Random random = new Random();
 
-		int startPosX = width / (2 + word.length());
 		int startPosY = (height - fontSize) / 5 + fontSize;
 
 		char[] wordChars = word.toCharArray();
+		Font[] chosenFonts = new Font[wordChars.length];
+		int [] charWidths = new int[wordChars.length];
+		int widthNeeded = 0;
 		for (int i = 0; i < wordChars.length; i++)
 		{
-			Font chosenFont = fonts[random.nextInt(fonts.length)];
-			g2D.setFont(chosenFont);
+			chosenFonts[i] = fonts[random.nextInt(fonts.length)];
 
 			char[] charToDraw = new char[]{
 				wordChars[i]
 			};
-			GlyphVector gv = chosenFont.createGlyphVector(frc, charToDraw);
-			double charWidth = gv.getVisualBounds().getWidth();
-
+			GlyphVector gv = chosenFonts[i].createGlyphVector(frc, charToDraw);
+			charWidths[i] = (int)gv.getVisualBounds().getWidth();
+			if (i > 0)
+			{
+				widthNeeded = widthNeeded + 2;
+			}
+			widthNeeded = widthNeeded + charWidths[i];
+		}
+		
+		int startPosX = (width - widthNeeded) / 2;
+		for (int i = 0; i < wordChars.length; i++)
+		{
+			g2D.setFont(chosenFonts[i]);
+			char[] charToDraw = new char[] {
+				wordChars[i]
+			};
 			g2D.drawChars(charToDraw, 0, charToDraw.length, startPosX, startPosY);
-			startPosX = startPosX + (int) charWidth + charSpace;
+			startPosX = startPosX + (int) charWidths[i] + charSpace;
 		}
 
 		return image;
