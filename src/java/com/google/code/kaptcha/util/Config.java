@@ -123,6 +123,14 @@ public class Config
 	}
 
 	/** */
+	public int getTextProducerCharSpace()
+    {
+		String paramName = Constants.KAPTCHA_TEXTPRODUCER_CHAR_SPACE;
+		String paramValue = properties.getProperty(paramName);
+		return this.helper.getPositiveInt(paramName, paramValue, 2);
+	}
+
+	/** */
 	public NoiseProducer getNoiseImpl()
 	{
 		String paramName = Constants.KAPTCHA_NOISE_IMPL;

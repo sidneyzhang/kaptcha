@@ -34,6 +34,7 @@ public class DefaultWordRenderer extends Configurable implements WordRenderer
 		int fontSize = getConfig().getTextProducerFontSize();
 		Font[] fonts = getConfig().getTextProducerFonts(fontSize);
 		Color color = getConfig().getTextProducerFontColor();
+		int charSpace = getConfig().getTextProducerCharSpace();
 		BufferedImage image = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2D = image.createGraphics();
@@ -65,7 +66,7 @@ public class DefaultWordRenderer extends Configurable implements WordRenderer
 			double charWidth = gv.getVisualBounds().getWidth();
 
 			g2D.drawChars(charToDraw, 0, charToDraw.length, startPosX, startPosY);
-			startPosX = startPosX + (int) charWidth + 2;
+			startPosX = startPosX + (int) charWidth + charSpace;
 		}
 
 		return image;
