@@ -18,12 +18,11 @@ public class DefaultTextCreator extends Configurable implements TextProducer
 	{
 		int length = getConfig().getTextProducerCharLength();
 		char[] chars = getConfig().getTextProducerCharString();
-		int randomContext = chars.length - 1;
 		Random rand = new Random();
 		StringBuffer text = new StringBuffer();
 		for (int i = 0; i < length; i++)
 		{
-			text.append(chars[rand.nextInt(randomContext) + 1]);
+			text.append(chars[rand.nextInt(length)]);
 		}
 
 		return text.toString();
