@@ -191,12 +191,13 @@
 	</target>
 
 	<target name="junit" depends="junit-compile">
-		<junit printsummary="yes" showoutput="yes" fork="yes">
+		<junit printsummary="yes" showoutput="yes" fork="yes" haltonfailure="yes">
 			<jvmarg value="-Dlog4j.configuration=file:${base.dir}/test/log4j.properties"/>
 
 			<classpath refid="test.classpath"/>
 
 			<formatter type="plain" />
+			<formatter type="xml" />
 
 			<batchtest todir="${build.dir}/test/">
 				<fileset dir="${build.dir}/test/classes">
