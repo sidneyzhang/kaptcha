@@ -22,7 +22,7 @@ public class DefaultTextCreator extends Configurable implements TextProducer
 		StringBuffer text = new StringBuffer();
 		for (int i = 0; i < length; i++)
 		{
-			text.append(chars[rand.nextInt(length)]);
+			text.append(chars[rand.nextInt(chars.length)]);
 		}
 
 		return text.toString();
