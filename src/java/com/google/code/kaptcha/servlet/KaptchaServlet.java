@@ -68,14 +68,8 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
-		// Set to expire far in the past.
-		resp.setDateHeader("Expires", 0);
 		// Set standard HTTP/1.1 no-cache headers.
-		resp.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
-		// Set IE extended HTTP/1.1 no-cache headers (use addHeader).
-		resp.addHeader("Cache-Control", "post-check=0, pre-check=0");
-		// Set standard HTTP/1.0 no-cache header.
-		resp.setHeader("Pragma", "no-cache");
+		resp.setHeader("Cache-Control", "private,no-cache,no-store");
 
 		// return a jpeg
 		resp.setContentType("image/jpeg");
