@@ -69,7 +69,7 @@ public class KaptchaServlet extends HttpServlet implements Servlet
 			throws ServletException, IOException
 	{
 		// Set standard HTTP/1.1 no-cache headers.
-		resp.setHeader("Cache-Control", "private,no-cache,no-store");
+		resp.setHeader("Cache-Control", "no-store, no-cache");
 
 		// return a jpeg
 		resp.setContentType("image/jpeg");
