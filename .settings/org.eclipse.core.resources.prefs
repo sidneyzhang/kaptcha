@@ -1,3 +1,5 @@
-#Wed Feb 13 10:08:01 PST 2008
 eclipse.preferences.version=1
 encoding//src/java/com/google/code/kaptcha/text/impl/ChineseTextProducer.java=UTF-8
+encoding//src/main/java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/test/java=UTF-8
