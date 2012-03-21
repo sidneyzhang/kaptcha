@@ -12,7 +12,7 @@ I'v tried to use:
     
   * SimpleCaptcha (http://simplecaptcha.sourceforge.net/)
     - Not maven based
-    - Binary instead of source code (imaging.jar represents jhlabs of 2000,
+    - Binary based (imaging.jar represents jhlabs of 2000,
       Internet gives me only latest com.jhlabs.filters:2.0.235 version)
       
   * ReCaptcha (http://www.google.com/recaptcha)
