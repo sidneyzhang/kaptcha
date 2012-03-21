@@ -1,7 +1,6 @@
-kaptcha - A kaptcha generation engine.
+kaptcha - A kaptcha generation engine clone of http://code.google.com/p/kaptcha/.
 
-Please see the website for more information about this project.
+Goals:
 
-http://code.google.com/p/kaptcha/
-
-thanks!
+  - Make it Maven based
+  - Allow use it from Spring
