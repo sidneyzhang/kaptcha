@@ -15,7 +15,11 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
+  <scm>
+    <url>https://github.com/axet/kaptcha</url>
+    <connection>scm:git:https://github.com/axet/kaptcha</connection>
+  </scm>
+  
   <distributionManagement>
     <snapshotRepository>
       <id>sonatype-nexus-snapshots</id>
