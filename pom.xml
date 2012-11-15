@@ -4,7 +4,7 @@
   <groupId>com.github.axet</groupId>
   <artifactId>kaptcha</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.5</version>
+  <version>0.0.6</version>
   <name>kaptcha</name>
   <description>A web kaptcha generation engine</description>
   <url>https://github.com/axet/kaptcha</url>
@@ -15,7 +15,11 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
+  <scm>
+    <url>https://github.com/axet/kaptcha</url>
+    <connection>scm:git:https://github.com/axet/kaptcha</connection>
+  </scm>
+  
   <distributionManagement>
     <snapshotRepository>
       <id>sonatype-nexus-snapshots</id>
