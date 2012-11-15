@@ -47,7 +47,7 @@ git_maven_bump() {
   git checkout -b $TAG || exit 1
   
   # put version to local maven repo. tagging will not produce missing deps
-  mvn install || exit 1
+  mvn install -DskipTests || exit 1
   
   # prepare to merge
   git checkout master || exit 1
