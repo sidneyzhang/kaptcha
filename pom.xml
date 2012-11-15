@@ -4,7 +4,7 @@
   <groupId>com.github.axet</groupId>
   <artifactId>kaptcha</artifactId>
   <packaging>jar</packaging>
-  <version>kaptcha</version>
+  <version>0.0.2</version>
   <name>kaptcha</name>
   <description>A web kaptcha generation engine</description>
   <url>https://github.com/axet/kaptcha</url>
