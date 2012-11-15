@@ -19,3 +19,11 @@ I'v tried to use:
     - Hard to read
 
 and decided to make my own fork...
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.axet</groupId>
+      <artifactId>kaptcha</artifactId>
+      <version>0.0.6</version>
+    </dependency>
+  </dependencies>
