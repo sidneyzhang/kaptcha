@@ -23,7 +23,7 @@ kaptcha - A kaptcha generation engine clone of http://code.google.com/p/kaptcha/
 and decided to make my own fork...
 
 ## Central Maven Repo
-
+```
   <dependencies>
     <dependency>
       <groupId>com.github.axet</groupId>
@@ -31,6 +31,7 @@ and decided to make my own fork...
       <version>0.0.6</version>
     </dependency>
   </dependencies>
+```
 
 ## Example
 
@@ -99,7 +100,7 @@ and decided to make my own fork...
 			
 			// User u = service.createUser(email, password, url);
 	
-			model.addObject("user", u);
+			// model.addObject("user", u);
 	
 			return model;
 		}
