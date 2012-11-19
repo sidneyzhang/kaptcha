@@ -1,11 +1,13 @@
+# Kaptcha
+
 kaptcha - A kaptcha generation engine clone of http://code.google.com/p/kaptcha/.
 
-Goals:
+## Goals
 
   - Make it Maven based
   - Allow use it from Spring
 
-I'v tried to use:
+## I'v tried to use:
 
   * JCaptcha (http://jcaptcha.sourceforge.net/)
     - Bad community responds (bad API).
