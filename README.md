@@ -88,7 +88,7 @@ and decided to make my own fork...
                 throw new RuntimeException("bad captcha");
     
             //
-            // eveyting is ok. process with your user registration / login process.
+            // eveyting is ok. proceed with your user registration / login process.
             //
     
             return model;
